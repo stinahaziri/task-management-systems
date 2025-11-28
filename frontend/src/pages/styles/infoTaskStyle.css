@@ -1,0 +1,378 @@
+body {
+  margin: 0;
+
+  padding: 0;
+
+  font-family: "Open Sans", sans-serif;
+}
+.toolBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 2% 3% 1% 3%;
+}
+.leftSide {
+  display: flex;
+  align-items: center;
+}
+.data,
+.addEpic {
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  color: rgb(59, 59, 59);
+}
+.toolBar .data input {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+.data i {
+  color: #0075ff;
+}
+.data i,
+.addEpic i {
+  font-size: 20px;
+}
+.toolBar .info i {
+  padding-left: 35px;
+  font-size: 23px;
+  color: rgb(59, 59, 59);
+  align-items: center;
+}
+.toolBar .info i:last-child {
+  padding-right: 5px;
+}
+label {
+  padding-left: 5px;
+  font-size: 20px;
+}
+
+/* infoTask */
+.infoTask {
+  margin-left: 2%;
+}
+.infoTask .row {
+  display: flex;
+  justify-content: space-between;
+}
+.infoTask .col {
+  flex-basis: 60%;
+
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+  height: 600px;
+}
+.infoTask .row .colum {
+  flex-basis: 35%;
+}
+.infoTask .attach {
+  display: flex;
+  margin-top: 10px;
+  align-items: center;
+  border: 2px solid #e9ecf7;
+  background-color: #e9ecf7;
+  width: 10%;
+  padding-left: 10px;
+  height: 30px;
+}
+.infoTask .attach i {
+  padding-right: 5px;
+}
+.infoTask .childissue {
+  height: 30px;
+  margin-top: 10px;
+  align-items: center;
+  border: 2px solid #e9ecf7;
+  margin-left: 20px;
+  background-color: #e9ecf7;
+  width: 18%;
+  padding-left: 10px;
+  display: flex;
+}
+.infoTask .childissue i {
+  padding: 8px;
+}
+.infoTask .tasks {
+  display: flex;
+  align-items: flex-end;
+}
+.infoTask .links i {
+  padding-right: 5px;
+}
+.infoTask .links {
+  align-items: center;
+  border: 2px solid #e9ecf7;
+  margin-left: 20px;
+  background-color: #e9ecf7;
+  width: 14%;
+  padding-left: 10px;
+  display: flex;
+  height: 30px;
+}
+.infoTask .links select {
+  width: 100px;
+  background-color: #e9ecf7;
+  border: transparent;
+}
+.infoTask .links select {
+  outline: transparent;
+  border: transparent;
+}
+.infoTask .description {
+  padding-top: 20px;
+}
+.infoTask .description h5 {
+  font-size: 14px;
+  color: gray;
+}
+.infoTask .description img {
+  width: 300px;
+}
+.infoTask .information {
+  padding-top: 30px;
+}
+.infoTask .information h4 span {
+  border: 2px solid #b8b2b2;
+  background-color: #b8b2b2;
+  border-radius: 50px;
+  padding: 5px;
+  font-size: 14px;
+  color: #fff;
+}
+.infoTask .information {
+  color: #3d3c3c;
+}
+.infoTask .information h5 span {
+  border: 2px solid #5790d6;
+  background-color: #5790d6;
+  border-radius: 50px;
+  padding: 5px;
+  font-size: 14px;
+  color: #fff;
+}
+.infoTask .information h5 {
+  font-size: 16px;
+  margin-top: 20px;
+}
+.addComent img {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  align-items: center;
+}
+.addComent input {
+  margin-left: 20px;
+  width: 800px;
+}
+.addComent input::placeholder {
+  padding-left: 20px;
+}
+/* .addComent {
+  display: flex;
+  justify-content: start;
+  align-items: center; 
+position: fixed;
+*/
+.addComent {
+  position: fixed;
+  display: flex;
+  margin-left: 30px;
+}
+footer input[type="text"] {
+  border: 1px solid #b8b2b2;
+}
+.footerHr {
+  width: 57%;
+  position: relative;
+  left: -320px;
+}
+/* colum 2 */
+.colum .toDo table {
+  border: 2px solid #b8b2b2;
+  width: 90%;
+  border-radius: 10px;
+}
+.colum .toDo h5 {
+  color: #5c5a5a;
+  padding-left: 10px;
+}
+.colum .toDo table td {
+  padding: 15px;
+  color: #3d3c3c;
+}
+.colum .toDo table th {
+  border-bottom: 2px solid #b8b2b2;
+  text-align: center;
+  padding: 3%;
+  color: #5c5a5a;
+  text-align: start;
+}
+.colum .toDo h3 {
+  border: 2px solid #e9ecf7;
+  background-color: #e9ecf7;
+  width: 80px;
+  font-size: 15px;
+
+  text-transform: uppercase;
+  text-align: center;
+}
+.colum .toDo table td img {
+  border-radius: 50%;
+  align-items: center;
+  display: inline;
+  width: 25px;
+}
+.colum .toDo .none {
+  color: #5c5a5a;
+}
+.colum .toDo .sprint {
+  color: blue;
+}
+.colum .toDo table .avatar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media screen and (max-width: 480px) {
+  /* .infoTask .row {
+    flex-direction: column;
+  } */
+  .toolBar {
+    display: block;
+    text-align: center;
+  }
+  .leftSide {
+    justify-content: center;
+  }
+  .information h4 span {
+    padding: 0px;
+  }
+  .information h4 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .infoTask {
+    margin: 0 5%;
+  }
+  .infoTask .information h4 span {
+    padding: 1px;
+  }
+  .infoTask .information h4 {
+    margin-top: 30px;
+  }
+  .infoTask .information h5 span {
+    padding: 1px;
+    margin: 0;
+  }
+
+  .infoTask .col {
+    max-height: 500px;
+    border-bottom: 1px solid black;
+  }
+
+  .infoTask .tasks {
+    justify-content: start;
+  }
+  .colum {
+    margin-top: 90px;
+  }
+  .tasks div {
+    margin-left: 0;
+    margin-right: 0;
+    width: 350px;
+  }
+  .infoTask .attach {
+    width: 20%;
+    padding-left: 10px;
+    overflow-y: hidden;
+  }
+  .infoTask .childissue {
+    width: 28%;
+    overflow-y: hidden;
+  }
+  .infoTask .links {
+    width: 24%;
+  }
+  .infoTask .row {
+    display: block;
+  }
+  * {
+    overflow-x: hidden;
+  }
+}
+/* tablet */
+@media only screen and (max-width: 768px) {
+  /* .infoTask .row {
+    flex-direction: column;
+  } */
+  .toolBar {
+    display: block;
+    text-align: center;
+  }
+  .leftSide {
+    justify-content: center;
+  }
+  .information h4 span {
+    padding: 0px;
+  }
+  .information h4 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .infoTask {
+    margin: 0 5%;
+  }
+  .infoTask .information h4 span {
+    padding: 1px;
+  }
+  .infoTask .information h4 {
+    margin-top: 30px;
+  }
+  .infoTask .information h5 span {
+    padding: 1px;
+    margin: 0;
+  }
+
+  .infoTask .col {
+    max-height: 500px;
+    border-bottom: 1px solid black;
+  }
+
+  .infoTask .tasks {
+    justify-content: center;
+  }
+  .colum {
+    margin-top: 90px;
+  }
+  .tasks div {
+    margin-left: 0;
+    margin-right: 0;
+    width: 350px;
+  }
+  .infoTask .attach {
+    width: 20%;
+    padding-left: 10px;
+    overflow-y: hidden;
+  }
+  .infoTask .childissue {
+    width: 28%;
+    overflow-y: hidden;
+  }
+  .infoTask .links {
+    width: 24%;
+  }
+  .infoTask .row {
+    display: block;
+  }
+  .addComent {
+    position: fixed;
+    display: flex;
+    margin-left: 30px;
+  }
+  * {
+    overflow-x: hidden;
+  }
+}

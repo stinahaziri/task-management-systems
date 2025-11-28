@@ -1,0 +1,149 @@
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Open Sans", sans-serif;
+  background-color: #ebebeb;
+}
+.signUp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.signUp .tittle {
+  text-align: center;
+  font-size: 20px;
+
+  background: -webkit-linear-gradient(
+    90deg,
+    rgba(63, 61, 98, 1) 0%,
+    rgba(49, 49, 219, 1) 46%,
+    rgba(0, 194, 233, 1) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.create input{
+  position: relative;
+  bottom: -15px;
+  
+}
+.signUp input::placeholder {
+  color: #20509e;
+  padding-left: 10px;
+}
+.signUp input {
+  height: 40px;
+  border: 1px solid #20509e;
+}
+
+input:focus {
+  outline: 1px solid #20509e;
+  border: 1px solid transparent;
+}
+/* input */
+.firstInput {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.firstInput input {
+  width: 200px;
+  height: 40px;
+  margin-top: 40px;
+}
+.seconInput input {
+  width: 420px;
+  height: 40px;
+  margin-top: 40px;
+}
+.inputGroup input {
+  border: 1px solid #ada7a7;
+  border-radius: 10px;
+}
+.inputGroup input::placeholder {
+  padding-left: 20px;
+}
+.inputGroup textarea {
+  margin-top: 30px;
+  border-radius: 10px;
+  border: 1px solid #ada7a7;
+}
+.inputGroup textarea::placeholder {
+  padding: 10px;
+  color: #20509e;
+}
+
+.title {
+  text-align: center;
+  color: #20509e;
+  font-size: 25px;
+}
+
+.create input[type="submit"] {
+  display: block;
+
+  margin-top: 25px;
+  border-radius: 20px;
+  border: 2px solid #20509e;
+  text-decoration: none;
+  padding: 10px;
+  text-transform: uppercase;
+  width: 300px;
+  color: #fff;
+  background: rgb(63, 61, 98);
+  background: linear-gradient(
+    90deg,
+    rgba(63, 61, 98, 1) 0%,
+    rgba(49, 49, 219, 1) 46%,
+    rgba(0, 194, 233, 1) 100%
+  );
+  font-size: 16px;
+  transform: translate(+20%);
+}
+.create {
+  text-align: center;
+  color: #20509e;
+}
+.create h4 {
+  display: inline;
+}
+.disagree:checked ~ a {
+  display: none;
+}
+
+.create input {
+  align-items: center;
+}
+@media only screen and (max-width: 480px) {
+  .firstInput input {
+    width: 150px;
+  }
+  .seconInput {
+    text-align: center;
+  }
+  .seconInput input {
+    width: 320px;
+  }
+
+  .inputGroup textarea {
+    width: 320px;
+  }
+  .firstInput input {
+    width: 150px;
+  }
+  .seconInput {
+    text-align: center;
+  }
+  .seconInput input {
+    width: 320px;
+  }
+
+  .create input[type="submit"] {
+    width: 230px;
+  }
+}
