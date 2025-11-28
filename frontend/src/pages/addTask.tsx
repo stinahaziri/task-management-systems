@@ -1,3 +1,4 @@
+import React from "react";
 import "./styles/signUpStyle.css";
 
 import Header from "./header"
