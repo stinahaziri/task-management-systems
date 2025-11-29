@@ -4,8 +4,13 @@ import { Link } from "react-router-dom";
 // import logo from "../image/Capture-removebg-preview.png";
 import './styles/getDemoStyle.css';
 import Header from "./header";
+//icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+
 
 function UserManagement() {
   return (
@@ -17,9 +22,10 @@ function UserManagement() {
         <div className="colOne">
           <div className="headerOne">
             <h1>Tasks</h1>
-            <i className="fa-solid fa-arrows-turn-to-dots"></i>
+            {/* <i className="fa-solid fa-arrows-turn-to-dots"></i> */}
+
             <Link to="/addTask">
-              <FontAwesomeIcon icon={faPlus} />
+              <FontAwesomeIcon  icon={faPlus}   className="plusIcon" />
             </Link>
           </div>
           <a href="infoTask.html">
@@ -65,6 +71,7 @@ function UserManagement() {
           <div className="headerTwo">
             <h1>In Progress</h1>
             <i className="fa-solid fa-gear"></i>
+            <FontAwesomeIcon  icon={faGear}   className="plusIcon" />
           </div>
           <a href="infoTask.html">
             <div className="cardtwo">
@@ -101,6 +108,7 @@ function UserManagement() {
           <div className="headerThree">
             <h1>Review</h1>
             <i className="fa-solid fa-magnifying-glass"></i>
+             <FontAwesomeIcon  icon={faMagnifyingGlass}   className="plusIcon" />
           </div>
           <a href="infoTask.html">
             <div className="cardThree">
@@ -141,11 +149,14 @@ function UserManagement() {
           <div className="headerFour">
             <h1>Finished</h1>
             <i className="fa-solid fa-circle-check"></i>
+              <FontAwesomeIcon  icon={faCircleCheck}   className="plusIcon" />
+            
           </div>
           <a href="infoTask.html">
             <div className="cardFour">
               <div className="taskName">
                 <h2>Counter widget</h2>
+
                 <details>
                   <summary> <i className="fa-solid fa-ellipsis-vertical"></i></summary>
                    

@@ -9,6 +9,7 @@ body {
   background-color: #ebebeb;
 }
 
+/* header */
 header {
   display: flex;
   justify-content: space-between;
@@ -91,6 +92,7 @@ header ul li a {
   padding-left: 20px;
   justify-content: space-between;
   box-shadow: -1px 14px 11px 0px rgba(0, 0, 0, 0.45);
+  height: 70px;
 }
 .getDemo .row .colOne,
 .getDemo .row .colTwo,
@@ -126,12 +128,19 @@ justify-content: start;
 summary{
   padding-bottom: 30px;
 }
-i.fa-solid.fa-plus,
+
+/* i.fa-solid.fa-plus,
 i.fa-solid.fa-trash-can,
 i.fa-solid.fa-paperclip{
-  font-size: 16px;
+font-size: 16px;
 padding: 0;
 padding: 0 6px;
+} */
+
+.plusIcon{
+color:white;
+font-size: 25px;
+padding-right: 10px;
 }
 
 h4:hover{
@@ -239,10 +248,11 @@ label {
 .cardtwo .avatar {
   display: flex;
 }
-.icon i {
+/* .icon i {
   padding-top: 8px;
   color: #0075ff;
-}
+} */
+
 /* .cardtwo .icon i::after {
   content: " 3";
 
