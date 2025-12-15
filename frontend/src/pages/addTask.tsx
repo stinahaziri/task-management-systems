@@ -1,13 +1,25 @@
 import React from "react";
 import "./styles/signUpStyle.css";
+import {useState} from "react";
 
 import Header from "./header"
 
-function AddTask() {
+
+
+
+type Props={};
+
+
+// function Appointment() {
+function AddTask (){
+
+  const[tittle,setTittle]=useState<string>();
+
+
   return (
     <>
+  
     <Header/>
-
     <section className="signUp">
       <div className="title">
         <h1>Add Task</h1>
@@ -16,8 +28,19 @@ function AddTask() {
         <form>
           <div className="firstInput">
             <div className="inputGroup">
-              <input type="text" placeholder="Title" />
+
+              <input
+              id="tittle"
+               type="text"
+               placeholder="Title"
+               value={tittle}
+              onChange={(e) => setTittle(e.target.value)}
+
+                 />
+
             </div>
+
+
             <div className="inputGroup">
               <input
                 type="datetime-local"

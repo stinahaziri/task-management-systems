@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace backend.Models.Entities
 {
-    public class TaskEntity
+    public class TaskAuth
     {
 
      // prop

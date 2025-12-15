@@ -4474,11 +4474,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ComCenter\\Desktop\\WP25G04\\task-management-systems\\backend\\backend.csproj",
+      "projectUniqueName": "C:\\Users\\ComCenter\\Documents\\GitHub\\task-management-systems\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "C:\\Users\\ComCenter\\Desktop\\WP25G04\\task-management-systems\\backend\\backend.csproj",
+      "projectPath": "C:\\Users\\ComCenter\\Documents\\GitHub\\task-management-systems\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\ComCenter\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ComCenter\\Desktop\\WP25G04\\task-management-systems\\backend\\obj\\",
+      "outputPath": "C:\\Users\\ComCenter\\Documents\\GitHub\\task-management-systems\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

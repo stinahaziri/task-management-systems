@@ -10,9 +10,11 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-
+import {useState} from "react";
 
 function UserManagement() {
+  const[task,setTask]=useState([]);
+
   return (
     <>
   <Header />
@@ -29,6 +31,7 @@ function UserManagement() {
             </Link>
           </div>
           <a href="infoTask.html">
+           {task.map((item, index) => (
             <div className="card">
               <div className="taskName">
                 <h2>Date formatting</h2> 
@@ -64,6 +67,7 @@ function UserManagement() {
                 </div>
               </div>
             </div>
+                ))}
           </a>
       
         </div>
