@@ -3,7 +3,8 @@ import "./styles/signUpStyle.css";
 import {useState} from "react";
 
 import Header from "./header"
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,7 +14,29 @@ type Props={};
 // function Appointment() {
 function AddTask (){
 
+  
   const[tittle,setTittle]=useState<string>();
+  const[Due_Date,setDue_Date]=useState();
+  const[Created_At,setCreated_At]=useState();
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    await axios.post("http://localhost:5165/api/TaskEntity", {
+      Title: title,
+      Due_Date: dueDate,
+    });
+
+    alert("Task u shtua me sukses!");
+    navigate("/UserManagement");
+  } catch (error) {
+    console.error(error);
+    alert("Gabim gjatë shtimit të task-ut");
+  }
+};
+
+
 
 
   return (

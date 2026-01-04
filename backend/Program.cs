@@ -1,4 +1,6 @@
 using backend.Data;
+using backend.Interface;
+using backend.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -20,6 +22,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     
 });
+builder.Services.AddScoped<ITaskE,TaskRepositor>();//ura lidhse me interfacin edhe klasen e cila e implementon ata
 var app = builder.Build();
 
 //zbatimi i swegger

@@ -4,17 +4,21 @@ using backend.Mappers;
 using backend.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using backend.Dtos.TaskEntity;
+using Microsoft.EntityFrameworkCore;
+using backend.Interface;
 
 
-namespace backend.Controllers
+namespace backend.Controllers 
 {
     [Route("backend/TaskEntity")]//rruga e Api si url psh
     [ApiController]//per mu sjell si Api
     public class TaskEntityControllers : ControllerBase//  me u sjell si kontroll me dit
     {
         private readonly ApplicationDbContext _context;//veq e bon mutable nuk i lejon njerzit me modifiku diqka qe sbon 
-        public TaskEntityControllers(ApplicationDbContext context)//konstruktori/ qyty e shtina databazen
+        private readonly ITaskE _taskRepo;
+        public TaskEntityControllers(ApplicationDbContext context , ITaskE  taskRepo)//konstruktori/ qyty e shtina databazen
         {
+            _taskRepo=taskRepo;
             _context = context;
 
         }
@@ -22,17 +26,21 @@ namespace backend.Controllers
         //get-i tash
         //get krejt me i marr
         [HttpGet]
-        public IActionResult GetALL()//na kthen requestin si metod cila o 200 ,404 e qisi sene
+        public async Task<IActionResult> GetALL()//na kthen requestin si metod cila o 200 ,404 e qisi sene
         {
-            var TaskEntity = _context.TaskEntity.ToList()//e nxjerrum prej databaze
-            .Select(s => s.ToTaskEntityDto());
+            var TaskEntity = await _taskRepo.GetListAsync(); //e nxjerrum prej databaze / _context.TaskEntity.ToListAsync()
+            
+            var TaskEntityDto=TaskEntity.Select(s => s.ToTaskEntityDto()) ;
+            // .Select(s => s.ToTaskEntityDto());
             return Ok(TaskEntity);
         }
+
         //get me e marr veq 1
         [HttpGet("{Id}")]
-        public IActionResult GetById([FromRoute] int Id)
+        public async Task<IActionResult> GetById([FromRoute] int ID)
         {
-            var TaskEntity = _context.TaskEntity.Find(Id);
+            //e kom thirr ma nalt Itasken me taskRepo
+            var TaskEntity = await _taskRepo.GetByIdAsync(ID);
 
             if (TaskEntity == null)
             {
@@ -46,11 +54,10 @@ namespace backend.Controllers
         //post
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateTaskRequestDto taskEntityDto)
+        public async Task<IActionResult> Create([FromBody] CreateTaskRequestDto taskEntityDto)
         {
             var TaskEntityModel = taskEntityDto.ToTaskEntityDTO();
-            _context.TaskEntity.Add(TaskEntityModel);
-            _context.SaveChanges();
+            await _taskRepo.CreateAsync(TaskEntityModel);
             return CreatedAtAction(nameof(GetById), new { id = TaskEntityModel.ID }, TaskEntityModel.ToTaskEntityDto());
         }
 
@@ -58,25 +65,15 @@ namespace backend.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] int ID, [FromBody] UptadeTaskRequestDto dto)
+        public async Task<IActionResult> Update([FromRoute] int ID, [FromBody] UptadeTaskRequestDto updateDto)
         {
             //me lyp id per me editu
-            var taskModel = _context.TaskEntity.FirstOrDefault(x => x.ID == ID);
+            var taskModel = await _taskRepo.UpdateAsync(ID ,updateDto);
             if (taskModel == null)
             {
                 return NotFound();
             }
-            //editimi
-            taskModel.Title=dto.Title;
-            
-            taskModel.Title=dto.Title;
-            taskModel.Description=dto.Description;
-            taskModel.Status=dto.Status;
-            taskModel.Priority=dto.Priority;
-            taskModel.Due_Date=dto.Due_Date;
-            taskModel.Created_By_Id=dto.Created_By_Id;
-
-            _context.SaveChanges();
+          
             return Ok(taskModel.ToTaskEntityDto());
 
 
@@ -85,15 +82,14 @@ namespace backend.Controllers
         [HttpDelete]
         [Route("{id}")]
 
-        public IActionResult Delete([FromRoute] int ID)
+        public async Task<IActionResult> Delete([FromRoute] int ID)
         {
-            var taskModal = _context.TaskEntity.FirstOrDefault(x => x.ID == ID);
+            var taskModal = await _taskRepo.DeleteAsync(ID);
             if (taskModal == null)
             {
                 return NotFound();
             }
-            _context.TaskEntity.Remove(taskModal);
-            _context.SaveChanges();
+           
             return NoContent();
         }
 
