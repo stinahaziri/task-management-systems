@@ -1,113 +1,96 @@
-import React from "react";
-import "./styles/signUpStyle.css";
-import {useState} from "react";
-
-import Header from "./header"
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Header from "./header";
+import "./styles/signUpStyle.css";
 
-
-
-type Props={};
-
-
-// function Appointment() {
-function AddTask (){
+function AddTask() {
+  const navigate = useNavigate();
 
   
-  const[tittle,setTittle]=useState<string>();
-  const[Due_Date,setDue_Date]=useState();
-  const[Created_At,setCreated_At]=useState();
-  
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("Tasks");
+  const [date,setDate] = useState("");
 
-  try {
-    await axios.post("http://localhost:5165/api/TaskEntity", {
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    //objektin qe pret .neti
+    const dataToSend = {
       Title: title,
-      Due_Date: dueDate,
-    });
+      // Description: description,
+      Status: status,
+      Priority: 1,
+      Due_Date:date,//new Date().toISOString()
+      Created_By_Id: 1
+    };
 
-    alert("Task u shtua me sukses!");
-    navigate("/UserManagement");
-  } catch (error) {
-    console.error(error);
-    alert("Gabim gjatë shtimit të task-ut");
-  }
-};
-
-
-
+    try {
+      await axios.post("http://localhost:5165/backend/TaskEntity", dataToSend);
+      navigate("/"); // Shko te faqja kryesore
+    } catch (error) {
+      alert("Gabim gjate ruajtjes!");
+    }
+  };
 
   return (
     <>
-  
-    <Header/>
-    <section className="signUp">
-      <div className="title">
-        <h1>Add Task</h1>
-      </div>
-      <div className="colum">
-        <form>
-          <div className="firstInput">
-            <div className="inputGroup">
+      <Header />
+      <section className="signUp">
+    
+        <h1 className="title">Add New Task</h1>
+        <div className="colum">
+        <form onSubmit={handleSubmit}>
+          {/* Inputi për Titullin */}
+          <div className="inputGroup">
 
-              <input
-              id="tittle"
-               type="text"
-               placeholder="Title"
-               value={tittle}
-              onChange={(e) => setTittle(e.target.value)}
+            <input 
+              type="text" 
+              placeholder="Title" 
+              value={title} 
+              onChange={(e) => setTitle(e.target.value)} 
+              required 
+            />
+          </div>
 
-                 />
-
-            </div>
-
-
-            <div className="inputGroup">
+        <div className="inputGroup">
               <input
                 type="datetime-local"
-                placeholder="Deadline "
+                placeholder="Deadline"
+                value={date}
+                onChange={(e)=>setDate(e.target.value)}
                 // maxlength="8"
               />
-            </div>
           </div>
-          <div className="seconInput">
-            {/* <div className="inputGroup">
-            <input type="text" placeholder="Email" maxlength="8" />
-          </div> */}
-            {/* <div className="inputGroup">
-            <input type="" placeholder="Phone" maxlength="8" />
-          </div> */}
-            <div className="inputGroup">
-              <textarea
-                name=""
-                id=""
-                // cols="55"
-                // rows="10"
-                placeholder="Comentt"
-              ></textarea>
-            </div>
-            <div className="inputGroup">
-              <select>
-                <option value="someOption">Some option</option>
-                <option value="otherOption">Other option</option>
-              </select>
-            </div>
-          </div>
-        </form>
-      </div>
 
-      <div className="create">
-        {/* <h4>Terms of service:</h4>
-      <input name="terms" className="agree" type="radio" />Agree
-      <input name="terms" className="disagree" type="radio" />Disagree */}
-        <a href="getDemo.html">
-          <input type="submit" />
-        </a>
-      </div>
-    </section>
-        </>
+          {/* <div className="inputGroup">
+            <textarea 
+              placeholder="Description" 
+              value={description} 
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div> */}
+
+          
+          {/* <div className="inputGroup">
+            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+              <option value="Tasks">Tasks</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Review">Review</option>
+              <option value="Finished">Finished</option>
+            </select>
+          </div> */}
+
+          <button type="submit" className="submit-btn">Save Task</button>
+        </form>
+        </div>
+     
+      </section>
+    </>
   );
 }
+
 export default AddTask;
