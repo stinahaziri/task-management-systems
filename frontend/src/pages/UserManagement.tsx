@@ -9,6 +9,7 @@ import { faPlus, faCircleCheck, faGear, faMagnifyingGlass, faEllipsisVertical, f
 function UserManagement() {
   const [tasks, setTasks] = useState<any[]>([]); // State per taska
   const [currentData,setCurrentData]= useState(new Date());
+   const [progresi,setProgresi]= useState();
 
   // marrim te dhenat nga backend
   useEffect(() => {
@@ -42,8 +43,12 @@ function UserManagement() {
   //   if (status === "Review") return 75;
   //   if (status === "In Progress") return 40;
   //   return 10;
-  // };
-
+//   // };
+// const ValueOfProgres=(setProgresi:number)=>{
+//   if(setProgresi==0 || setProgresi==10 ){
+//   style={}
+//   }
+// }
   return (
     <>
       <Header />
@@ -60,8 +65,12 @@ function UserManagement() {
                   <FontAwesomeIcon icon={faPlus} className="plusIcon" />
                 </Link>
               </div>
+             
               {tasks.map((item) => (
-                <div className="card" key={item.id}>
+                
+               
+                <div className="card"  key={item.id}>
+                  
                   <div className="taskName">
                     <h2>{item.title}</h2> 
                     <hr />
@@ -72,23 +81,25 @@ function UserManagement() {
                       </h4>
                     </details>
                   </div>
-                  
+                  <Link to={`/infoTask/${item.id}`}  key={item.id}>
                   {/* <p>{new Date(item.due_Date).toDateString()} / {new Date(currentData).toDateString()}</p> */}
                   
-                  <label htmlFor="deadline">Today's data:</label>
-                  <p> {new Date(currentData).toDateString()}</p>
+                  <label className="LableTask" >Today's data:</label>
+                  <p id="todayDate"> {new Date(currentData).toDateString()}</p>
                   
-                  <label htmlFor="deadline">Deadline </label>
+                  <label className="LableTask" htmlFor="deadline">Deadline:</label>
                   <p id="deadline">{new Date(item.due_Date).toDateString()} </p>
-
                   
+        
                   
-                  <progress className="progress" id="file" value="0" max="100"> 0% </progress>
+               <progress  className="progress" id="file" value="0" max="100"> 0% </progress>
               <label htmlFor="file">0%</label>
-              
+            
               <progress className="progress" id="file" value="30" max="100"> 0% </progress>
               <label htmlFor="file">0%</label>
+               </Link>
                 </div>
+                 
               ))}
           
             </div>

@@ -6,40 +6,47 @@ body {
   background-color: #ebebeb;
 }
 .signUp {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
+
+  display: grid;
+  justify-content: center;
+ place-items: center;
+  align-items: center;
+  height: 100vh;
+  
 }
 .signUp .tittle {
   text-align: center;
-  font-size: 20px;
+  font-size: 50px;
 
-  background: -webkit-linear-gradient(
+   background: -webkit-linear-gradient(
     90deg,
     rgba(63, 61, 98, 1) 0%,
     rgba(49, 49, 219, 1) 46%,
     rgba(0, 194, 233, 1) 100%
   );
+
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.create input{
-  position: relative;
-  bottom: -15px;
   
 }
+.colum{
+text-align: center;
+}
+
+
 .signUp input::placeholder {
   color: #20509e;
-  padding-left: 10px;
+  
 }
-.signUp input {
-  height: 40px;
+.signUp input,textarea{
   border: 1px solid #20509e;
 }
 
-input:focus {
+input:focus,textarea:focus {
   outline: 1px solid #20509e;
   border: 1px solid transparent;
 }
@@ -52,41 +59,65 @@ input:focus {
 }
 
 .firstInput input {
+   
   width: 200px;
   height: 40px;
   margin-top: 40px;
 }
-.seconInput input {
+.seconInput input{
   width: 420px;
   height: 40px;
   margin-top: 40px;
 }
-.inputGroup input {
-  border: 1px solid #ada7a7;
+.inputGroup input{
+  /* border: 1px solid #ada7a7; */
   border-radius: 10px;
-}
-.inputGroup input::placeholder {
   padding-left: 20px;
 }
+.inputGroup input::placeholder {
+  color: #20509e;
+}
 .inputGroup textarea {
-  margin-top: 30px;
+  padding-left: 10px;
+  
+  align-items: center;
+  padding-top: 10px;
   border-radius: 10px;
-  border: 1px solid #ada7a7;
+  width: 420px;
+  height: 25px;
+  margin-top: 40px;
+  
 }
 .inputGroup textarea::placeholder {
-  padding: 10px;
+  /* padding: 10px; */
   color: #20509e;
 }
 
-.title {
-  text-align: center;
-  color: #20509e;
-  font-size: 25px;
+input[type="date"] {
+  color: #20509e; /* ngjyra e dates */
 }
 
-.create input[type="submit"] {
+input[type="date"]::-webkit-datetime-edit {
+  color: #20509e;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: #20509e;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #20509e;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(32%) sepia(92%) saturate(750%) hue-rotate(190deg);
+  cursor: pointer;
+}
+
+.ButonAdd {
   display: block;
-
+cursor:pointer;
   margin-top: 25px;
   border-radius: 20px;
   border: 2px solid #20509e;

@@ -21,7 +21,7 @@ function AddTask() {
     //objektin qe pret .neti
     const dataToSend = {
       Title: title,
-      // Description: description,
+      Description: description,
       Status: status,
       Priority: 1,
       Due_Date:date,//new Date().toISOString()
@@ -40,14 +40,16 @@ function AddTask() {
     <>
       <Header />
       <section className="signUp">
-    
-        <h1 className="title">Add New Task</h1>
         <div className="colum">
-        <form onSubmit={handleSubmit}>
-          {/* Inputi për Titullin */}
-          <div className="inputGroup">
+    
+        <h1 className="tittle">Add New Task</h1>
 
+        
+        <form onSubmit={handleSubmit}>
+ <div className="firstInput">
+          <div className="inputGroup">
             <input 
+             
               type="text" 
               placeholder="Title" 
               value={title} 
@@ -58,14 +60,25 @@ function AddTask() {
 
         <div className="inputGroup">
               <input
-                type="datetime-local"
+                type="date"
                 placeholder="Deadline"
                 value={date}
                 onChange={(e)=>setDate(e.target.value)}
                 // maxlength="8"
               />
           </div>
+</div>
 
+         <div className="seconInput">
+          <div className="inputGroup">
+            <textarea value={description}
+            id=""
+            placeholder="Description"
+            onChange={(e)=>setDescription(e.target.value)}
+
+              ></textarea>
+          </div>
+        </div>
           {/* <div className="inputGroup">
             <textarea 
               placeholder="Description" 
@@ -84,7 +97,7 @@ function AddTask() {
             </select>
           </div> */}
 
-          <button type="submit" className="submit-btn">Save Task</button>
+          <button className="ButonAdd"type="submit">Save Task</button>
         </form>
         </div>
      
