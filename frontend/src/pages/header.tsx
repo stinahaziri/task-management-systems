@@ -1,12 +1,16 @@
 import React from 'react';
 import './styles/getDemoStyle.css';
+import Index from"./Index"
+import {Link}from "react-router-dom";
+
+import logo from"./image/Capture-removebg-preview.png";
 
 function Header() {
   return (
     <header>
       <div>
         <a href="index.html">
-          <img className="logo" src="image/Capture-removebg-preview.png" alt="" />
+          <img className="logo" src={logo} alt="" />
         </a>
       </div>
       
@@ -16,13 +20,20 @@ function Header() {
       </label>
       
       <ul>
+        <Link to={"/"}>
         <li><a href="index.html">Home</a></li>
+        </Link>
+
+        <Link to={"/about"}>
         <li><a href="about.html">About</a></li>
-        <li><a href="news1.html">News</a></li>
+        </Link>
+        <Link to={"/pricing"}>
         <li><a href="pricing.html">Pricing</a></li>
+        </Link>
+         <Link to={"/contact"}>
         <li><a href="contact.html">Contact</a></li>
+        </Link>
       </ul>
-      <img className="acc" src="image/HKstrategies-755-1-1024x683.jpg" alt="" />
     </header>
   );
 }

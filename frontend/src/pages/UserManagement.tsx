@@ -93,10 +93,10 @@ function UserManagement() {
         
                   
                <progress  className="progress" id="file" value="0" max="100"> 0% </progress>
-              <label htmlFor="file">0%</label>
+              <label className="labelProgres" htmlFor="file">0%</label>
             
               <progress className="progress" id="file" value="30" max="100"> 0% </progress>
-              <label htmlFor="file">0%</label>
+              <label className="labelProgres" htmlFor="file">0%</label>
                </Link>
                 </div>
                  

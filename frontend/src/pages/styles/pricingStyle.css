@@ -134,6 +134,7 @@ header ul li a {
   color: #292d3a;
   font-weight: bold;
   text-align: left;
+  
 }
 .pricing .row .col-1 h5 {
   color: #292d3a;
@@ -321,6 +322,7 @@ header ul li a {
   text-decoration: none;
   padding: 15px 45px;
   border-radius: 10px;
+  
 }
 .pricing .row .col-5 ul {
   margin-top: 30px;
@@ -329,6 +331,9 @@ header ul li a {
   list-style-type: none;
 }
 
+.pricing .row .col-5 h1{
+  padding-bottom: 50px;
+}
 .pricing .row .col-5 li {
   padding-top: 20px;
   color: #474b52;
@@ -344,6 +349,7 @@ header ul li a {
   color: #292d34;
   font-size: 80px;
   padding: 15px 0 50px 0;
+  margin-bottom: 80px;
 }
 
 /* getdemo */

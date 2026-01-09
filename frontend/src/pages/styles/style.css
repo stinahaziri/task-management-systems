@@ -1,12 +1,7 @@
 html {
   overflow-x: hidden;
 }
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #f3f7f9;
-  font-family: "Open Sans", sans-serif;
-}
+
 /* *:after,
 ::before {
   box-sizing: border-box;
@@ -15,7 +10,7 @@ body {
   width: 100%;
   height: auto;
 } */
-header {
+.headeri {
   display: flex;
   justify-content: space-between;
   position: absolute;
@@ -25,10 +20,10 @@ header {
   /* padding: 30px 50px 0; */
   z-index: 99;
 }
-header ul {
+.headeri ul {
   display: flex;
 }
-header ul li {
+.headeri ul li {
   padding-left: 30px;
   padding-right: 20px;
   list-style: none;
@@ -36,12 +31,12 @@ header ul li {
   justify-self: center;
   font-size: 18px;
 }
-header img {
+.headeri img {
   padding-left: 40px;
 
   width: 160px;
 }
-header ul li a {
+.headeri ul li a {
   text-decoration: none;
   color: aliceblue;
 }
@@ -56,6 +51,7 @@ header ul li a {
 .active{
   color: seashell;
   font-weight: bold;
+  
 }
 /* main part */
 .mainPart {
@@ -77,6 +73,8 @@ header ul li a {
 .mainPart .row {
   display: flex;
   justify-content: center;
+  text-align: start;
+  align-items: center;
   gap: 20px;
 
   position: absolute;
@@ -90,13 +88,14 @@ header ul li a {
   color: #20509e;
   font-size: 50px;
   line-height: 1.3;
-
+font-weight: 200;
   text-transform: uppercase;
 }
 .mainPart .col-1 p {
   color: #75849a;
   font-size: 16px;
   letter-spacing: 1px;
+  padding-top: 30px;
 }
 
 .mainPart .col-1 span {
@@ -161,7 +160,7 @@ button {
 }
 .aboutSection .row .col-2 h1 {
   color: #20509e;
-
+font-weight: 300;
   font-size: 38px;
 }
 
@@ -191,19 +190,23 @@ button {
   font-size: 18px;
   color: #75849a;
   max-width: 500px;
-
+font-weight: 300;
   /* overflow: hidden; */
   padding-bottom: 40px;
 }
 
 /* Features */
-.title {
+.titlee {
   text-align: center;
 }
-.title h1 {
+.titlee h3 {
+padding-bottom: 30px;
+}
+.titlee h1 {
   padding-top: 70px;
   text-transform: uppercase;
   font-size: 30px;
+  padding-bottom: 10px;
 }
 
 .features {
@@ -222,14 +225,22 @@ button {
   padding-top: 40px;
 
   display: flex;
-  gap: 70px;
+  gap: 100px;
+  padding-bottom: 100px;
   justify-content: center;
 }
-.features .col i {
+.features .iconOfRow{
   font-size: 40px;
   float: left;
   padding-top: 3px;
   padding-right: 20px;
+}
+.features .col h2{
+padding-bottom: 20px;
+}
+
+.features .col p{
+padding-bottom: 20px;
 }
 .features .col .featuresText a {
   text-decoration: none;
@@ -326,14 +337,9 @@ button {
 .getStarted .row .col-1 h2,
 .getStarted .row .col-2 h2,
 .getStarted .row .col-3 h2 {
-  color: #20509e;
-}
 
-.getStarted .row .col-1 i,
-.getStarted .row .col-2 i,
-.getStarted .row .col-3 i {
-  font-size: 50px;
-
+  padding-bottom: 10px;
+  
   background: linear-gradient(
     90deg,
     rgba(63, 61, 98, 1) 0%,
@@ -342,6 +348,13 @@ button {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.getStarted .row .iconOfGetStarted {
+  font-size: 50px;
+    color: #0c3981;
+
+  padding-bottom: 15px;
 }
 /* getDemo */
 
@@ -387,7 +400,7 @@ button {
 .team .meetOurTeam h1 {
   color: #20509e;
   font-size: 40px;
-
+padding-bottom: 15px;
   background: -webkit-linear-gradient(
     90deg,
     rgba(63, 61, 98, 1) 0%,
@@ -433,11 +446,13 @@ button {
 }
 .team .row .col h3 {
   color: #20509e;
+  padding-top: 20px;
 }
 .team .row .col h4 {
   color: #75849a;
+  padding-top: 20px;
 }
-.team .row .col i {
+.team .row .col .teamIcon {
   border: 2px solid #20509e;
   padding: 15px;
   font-size: 20px;
@@ -445,8 +460,9 @@ button {
   margin: 0 10px;
   color: #fff;
   background-color: #b3babbfa;
+  margin-top: 40px;
 }
-.team .row .col i {
+.team .row .col .teamIcon {
   background: #3f3d62;
   background: linear-gradient(90deg, #3f3d62 0%, #3131db 46%, #00c2e9 100%);
 }
@@ -618,7 +634,7 @@ footer .col a {
     font-size: 30px;
   }
   /* features */
-  .features .row {
+  .features .row1 {
     display: block;
     margin: 0;
     padding: 0;

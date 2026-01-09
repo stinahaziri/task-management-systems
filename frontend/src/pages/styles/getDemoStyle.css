@@ -143,9 +143,9 @@ font-size: 25px;
 padding-right: 10px;
 }
 
-h4:hover{
+/* h4:hover{
   background-color: #c9c7c7;
-}
+} */
 .taskName summary::marker{
   content: "";
 }
@@ -309,7 +309,8 @@ summary i{
   color: #30732b;
   font-weight: bold;
 }
-label {
+
+.labelProgres {
   padding-left: 10px;
   font-size: 13px;
 }
@@ -324,7 +325,8 @@ label {
   font-size: 14px;
   color: #ac6f04; 
 }
-label {
+
+.labelProgres {
   font-weight: bold;
   color: gray;
 }
