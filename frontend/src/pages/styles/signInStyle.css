@@ -1,0 +1,80 @@
+.signInMainn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+  background-color: #f9f9f9;
+  min-height: 80vh;
+}
+
+.columSign {
+  background: white;
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.columSign .tittle {
+  font-size: 35px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.columSign .descriptionText {
+  color: #777;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.columSign.firstInput {
+  margin-bottom: 15px;
+}
+
+.columSign.inputGroup input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #fdfdfd;
+  transition: 0.3s;
+}
+
+.columSign .inputGroup input:focus {
+  border-color: #007bff;
+  outline: none;
+  background: white;
+}
+
+.columSign .butoniS .ButonAdd {
+  /* width: 100%; */
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.columSign .ButonAdd:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.columSign .footerLink {
+  margin-top: 25px;
+  font-size: 14px;
+}
+
+.columSign .footerLink a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}

@@ -11,6 +11,9 @@ import About from"./pages/About"
 import Pricing from "./pages/pricing"
 import Contact from "./pages/contact"
 
+import Login from"./pages/Login"
+import SignIn from './pages/SignIn';
+
 
 function AppRoutes() {
   return (
@@ -20,7 +23,9 @@ function AppRoutes() {
       <Route path="/userManagment" element={<UserManagement/>} />
       <Route path="/about" element={<About/>} />
       <Route path="/pricing" element={<Pricing/>} />
-      <Route path="/contact" element={<Contact/>} />
+      <Route path="/contact" element={<Contact/>} />\
+      <Route path="/login" element={<Login/>} />
+      <Route path="/signIn" element={<SignIn/>} />
     
 
       <Route path="/addTask" element={<AddTask/>} />

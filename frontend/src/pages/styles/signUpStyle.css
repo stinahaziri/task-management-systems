@@ -1,174 +1,164 @@
-
+/* =========================
+   PAGE LAYOUT
+========================= */
 .signUpp {
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
-
-  display: grid;
+  min-height: 100vh;
+  display: flex;
   justify-content: center;
- place-items: center;
   align-items: center;
-  height: 100vh;
-  
+  background: #f5f7fb;
+  margin-top: 40px;
 }
+
+/* =========================
+   CARD
+========================= */
+.signUpp .colum {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================
+   TITLE
+========================= */
 .signUpp .tittle {
   text-align: center;
-  font-size: 50px;
-
-   background: -webkit-linear-gradient(
+  font-size: 36px;
+  margin-bottom: 30px;
+  background: linear-gradient(
     90deg,
-    rgba(63, 61, 98, 1) 0%,
-    rgba(49, 49, 219, 1) 46%,
-    rgba(0, 194, 233, 1) 100%
+    rgba(63, 61, 98, 1),
+    rgba(49, 49, 219, 1),
+    rgba(0, 194, 233, 1)
   );
-
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  
-}
-.colum{
-text-align: center;
 }
 
-
-.signUpp input::placeholder {
-  color: #20509e;
-  
-}
-.signUpp input,textarea{
-  border: 1px solid #20509e;
-}
-
-input:focus,textarea:focus {
-  outline: 1px solid #20509e;
-  border: 1px solid transparent;
-}
-/* input */
-.firstInput {
+/* =========================
+   FORM GROUPS
+========================= */
+.signUpp .inputGroup {
   display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.firstInput input {
-   
-  width: 200px;
-  height: 40px;
-  margin-top: 40px;
+/* =========================
+   FIRST ROW (TITLE + DATE)
+========================= */
+.signUpp .firstInput {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
 }
-.seconInput input{
-  width: 420px;
-  height: 40px;
-  margin-top: 40px;
+
+/* =========================
+   SECOND ROW (DESCRIPTION)
+========================= */
+.signUpp .seconInput {
+  margin-bottom: 20px;
 }
-.inputGroup input{
-  /* border: 1px solid #ada7a7; */
+
+
+/* =========================
+   INPUTS & TEXTAREA
+========================= */
+.signUpp input,
+.signUpp textarea {
+  width: 100%;
   border-radius: 10px;
-  padding-left: 20px;
-}
-.inputGroup input::placeholder {
+  border: 1px solid #20509e;
+  font-size: 14px;
   color: #20509e;
-}
-.inputGroup textarea {
-  padding-left: 10px;
-  
-  align-items: center;
-  padding-top: 10px;
-  border-radius: 10px;
-  width: 420px;
-  height: 25px;
-  margin-top: 40px;
-  
-}
-.inputGroup textarea::placeholder {
-  /* padding: 10px; */
-  color: #20509e;
+  background: #fff;
 }
 
-input[type="date"] {
-  color: #20509e; /* ngjyra e dates */
+.signUpp input {
+  height: 44px;
+  padding: 0 14px;
 }
 
-input[type="date"]::-webkit-datetime-edit {
-  color: #20509e;
+.signUpp textarea {
+  min-height: 120px;
+  padding: 12px 14px;
+  resize: vertical;
 }
 
-input[type="date"]::-webkit-datetime-edit-text {
+/* =========================
+   PLACEHOLDERS
+========================= */
+.signUpp input::placeholder,
+.signUpp textarea::placeholder {
   color: #20509e;
+  opacity: 0.7;
+  padding: 0;
 }
 
-input[type="date"]::-webkit-datetime-edit-month-field,
-input[type="date"]::-webkit-datetime-edit-day-field,
-input[type="date"]::-webkit-datetime-edit-year-field {
-  color: #20509e;
+.signUpp input:focus,
+.signUpp textarea:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px rgba(32, 80, 158, 0.3);
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+
+/* =========================
+   DATE INPUT ICON
+========================= */
+.signUpp input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(32%) sepia(92%) saturate(750%) hue-rotate(190deg);
   cursor: pointer;
 }
 
-.ButonAdd {
-  display: block;
-cursor:pointer;
+/* =========================
+   BUTTON
+========================= */
+.signUpp .ButonAdd {
+  width: 100%;
   margin-top: 25px;
+  padding: 12px;
   border-radius: 20px;
-  border: 2px solid #20509e;
-  text-decoration: none;
-  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #ffffff;
   text-transform: uppercase;
-  width: 300px;
-  color: #fff;
-  background: rgb(63, 61, 98);
   background: linear-gradient(
     90deg,
-    rgba(63, 61, 98, 1) 0%,
-    rgba(49, 49, 219, 1) 46%,
-    rgba(0, 194, 233, 1) 100%
+    rgba(63, 61, 98, 1),
+    rgba(49, 49, 219, 1),
+    rgba(0, 194, 233, 1)
   );
-  font-size: 16px;
-  transform: translate(+20%);
-}
-.create {
-  text-align: center;
-  color: #20509e;
-}
-.create h4 {
-  display: inline;
-}
-.disagree:checked ~ a {
-  display: none;
+  transition: opacity 0.3s ease, transform 0.2s ease;
 }
 
-.create input {
-  align-items: center;
+.signUpp .ButonAdd:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
-@media only screen and (max-width: 480px) {
-  .firstInput input {
-    width: 150px;
-  }
-  .seconInput {
-    text-align: center;
-  }
-  .seconInput input {
-    width: 320px;
+
+.signUpp .ButonAdd:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 480px) {
+  .signUpp .colum {
+    padding: 25px;
   }
 
-  .inputGroup textarea {
-    width: 320px;
-  }
-  .firstInput input {
-    width: 150px;
-  }
-  .seconInput {
-    text-align: center;
-  }
-  .seconInput input {
-    width: 320px;
+  .signUpp .tittle {
+    font-size: 28px;
   }
 
-  .create input[type="submit"] {
-    width: 230px;
+  .signUpp .firstInput {
+    grid-template-columns: 1fr;
   }
 }

@@ -35,7 +35,8 @@ function Header() {
           <NavLink to="/userManagment" className="nav-item">User</NavLink>
         </li>
         <li>
-          <a  className="singUp">Sign Up Free</a>
+           <NavLink to="/login" className="singUp">Sign Up</NavLink>
+          {/* <a  className="singUp">Sign Up Free</a> */}
         </li>
       </ul>
     </header>
