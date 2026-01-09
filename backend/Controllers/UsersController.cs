@@ -1,74 +1,85 @@
-[ApiController]
-[Route("api/users")]
-[Authorize]
-public class UsersController : ControllerBase
+using backend.Data;
+using backend.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
+namespace backend.Controllers
 {
-    private readonly AppDbContext _context;
-
-    public UsersController(AppDbContext context)
+    [ApiController]
+    [Route("backend/users")]
+    [Authorize]
+    public class UsersController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    // ✅ ADMIN – GET ALL USERS
-    [HttpGet]
-    [Authorize(Roles = "ADMIN")]
-    public async Task<IActionResult> GetUsers()
-    {
-        return Ok(await _context.Users.ToListAsync());
-    }
+        public UsersController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
-    // ✅ ADMIN – CREATE USER
-    [HttpPost]
-    [Authorize(Roles = "ADMIN")]
-    public async Task<IActionResult> CreateUser(ApplicationUser user)
-    {
-        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword("123456");
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
-        return Ok(user);
-    }
+        // read all users  Admin
+        [HttpGet]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            return Ok(await _context.Users.ToListAsync());
+        }
 
-    // ✅ ADMIN – UPDATE USER
-    [HttpPut("{id}")]
-    [Authorize(Roles = "ADMIN")]
-    public async Task<IActionResult> UpdateUser(int id, ApplicationUser dto)
-    {
-        var user = await _context.Users.FindAsync(id);
-        if (user == null) return NotFound();
+        //create user admin
+        [HttpPost]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> CreateUser(ApplicationUser user)
+        {
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword("123456");
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return Ok(user);
+        }
 
-        user.FullName = dto.FullName;
-        user.Email = dto.Email;
-        user.Role = dto.Role;
+        // update user admin
+        [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> UpdateUser(int id, ApplicationUser dto)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return NotFound();
 
-        await _context.SaveChangesAsync();
-        return Ok(user);
-    }
+            user.FullName = dto.FullName;
+            user.Email = dto.Email;
+            user.Role = dto.Role;
 
-    // ✅ ADMIN – DELETE USER
-    [HttpDelete("{id}")]
-    [Authorize(Roles = "ADMIN")]
-    public async Task<IActionResult> DeleteUser(int id)
-    {
-        var user = await _context.Users.FindAsync(id);
-        if (user == null) return NotFound();
+            await _context.SaveChangesAsync();
+            return Ok(user);
+        }
 
-        _context.Users.Remove(user);
-        await _context.SaveChangesAsync();
-        return NoContent();
-    }
+        // delete user admin
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return NotFound();
 
-    // 🔄 USER & ADMIN – UPDATE OWN PROFILE
-    [HttpPut("profile/me")]
-    public async Task<IActionResult> UpdateMyProfile(ApplicationUser dto)
-    {
-        var userId = int.Parse(User.FindFirst("id").Value);
-        var user = await _context.Users.FindAsync(userId);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
 
-        user.FullName = dto.FullName;
-        user.Email = dto.Email;
+        // uupdate own profile user and admin
+        [HttpPut("profile/me")]
+        public async Task<IActionResult> UpdateMyProfile(ApplicationUser dto)
+        {
+            var userId = int.Parse(User.FindFirst("UserId").Value);
+            var user = await _context.Users.FindAsync(userId);
 
-        await _context.SaveChangesAsync();
-        return Ok(user);
+            user.FullName = dto.FullName;
+            user.Email = dto.Email;
+
+            await _context.SaveChangesAsync();
+            return Ok(user);
+        }
     }
 }
+
