@@ -52,7 +52,7 @@ function UserManagement() {
   return (
     <>
       <Header />
-      <section className="getDemo">
+      <section className="getDemoo">
         <div className="contanier">
           <div className="row">
             

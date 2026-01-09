@@ -1,4 +1,4 @@
-import "./styles/infoTaskStyle.css"
+import "./styles/infoTaskStyle.css";
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUnlock, faThumbsUp,faEye,faShareNodes,faEllipsis,faXmark} from "@fortawesome/free-solid-svg-icons";
@@ -59,7 +59,7 @@ return(
       <FontAwesomeIcon icon={faShareNodes}  className="icona"/>
       <FontAwesomeIcon icon={faEllipsis}  className="icona"/>
 
-      <Link to={"/"}>
+      <Link to={"/userManagment"}>
       <FontAwesomeIcon icon={faXmark}  />
       </Link>
 

@@ -8,34 +8,7 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  position: fixed;
-  width: 100%;
-  align-items: center;
-  top: 0;
-  background-color: #fff;
-  z-index: 1;
-}
-header ul {
-  display: flex;
-}
-header ul li {
-  padding-left: 30px;
-  padding-right: 30px;
-  list-style: none;
-  justify-self: center;
-  font-size: 18px;
-}
-header img {
-  padding-left: 40px;
-  width: 40%;
-}
-header ul li a {
-  text-decoration: none;
-  color: #20509e;
-}
+
 .singUp {
   border: 2px solid #7ad4cc;
   margin-left: 40px;

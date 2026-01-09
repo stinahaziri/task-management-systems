@@ -1,38 +1,42 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 import './styles/getDemoStyle.css';
-import Index from"./Index"
-import {Link}from "react-router-dom";
-
-import logo from"./image/Capture-removebg-preview.png";
+import logo from "./image/Capture-removebg-preview.png";
 
 function Header() {
   return (
-    <header>
-      <div>
-        <a href="index.html">
-          <img className="logo" src={logo} alt="" />
-        </a>
+    <header className="header-container">
+      <div className="logo-section">
+        <NavLink to="/">
+          <img src={logo} alt="Logo" className="logo-img" />
+        </NavLink>
       </div>
-      
-      <input type="checkbox" id="check"/>
-      <label className="checkInput">
+
+      <input type="checkbox" id="check" className="menu-checkbox"/>
+      <label htmlFor="check" className="checkInput">
         <i className="fa-solid fa-bars"></i>
       </label>
-      
-      <ul>
-        <Link to={"/"}>
-        <li><a href="index.html">Home</a></li>
-        </Link>
 
-        <Link to={"/about"}>
-        <li><a href="about.html">About</a></li>
-        </Link>
-        <Link to={"/pricing"}>
-        <li><a href="pricing.html">Pricing</a></li>
-        </Link>
-         <Link to={"/contact"}>
-        <li><a href="contact.html">Contact</a></li>
-        </Link>
+      <ul className="nav-list">
+        <li>
+          <NavLink to="/" className="nav-item" end>Home</NavLink>
+        </li>
+        <li>
+          <NavLink to="/about" className="nav-item">About</NavLink>
+        </li>
+        <li>
+          <NavLink to="/pricing" className="nav-item">Pricing</NavLink>
+        </li>
+        <li>
+          <NavLink to="/contact" className="nav-item">Contact</NavLink>
+        </li>
+        
+         <li>
+          <NavLink to="/userManagment" className="nav-item">User</NavLink>
+        </li>
+        <li>
+          <a  className="singUp">Sign Up Free</a>
+        </li>
       </ul>
     </header>
   );

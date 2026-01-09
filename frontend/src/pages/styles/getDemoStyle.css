@@ -9,6 +9,7 @@ body {
   background-color: #ebebeb;
 }
 
+
 /* header */
 header {
   display: flex;
@@ -56,33 +57,60 @@ header ul li a {
   border-radius: 50px;
   padding: 10px 30px;
 } */
+/* Stili bazë për të gjithë linkat */
+.nav-item {
+  text-decoration: none;
+  color: #333; /* Ngjyra normale */
+  font-size: 18px;
+  padding: 10px 15px;
+  transition: 0.3s;
+}
 
-.getDemo .row {
+/* KJO ASHTU KLASA QE AKTIVIZOHET VET */
+.nav-item.active {
+  color: #ff0000; 
+  
+  font-weight: bold;
+}
+
+
+.signup-button {
+  text-decoration: none;
+  background-color: blue;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 5px;
+}
+
+.signup-button.active {
+  background-color: black;
+}
+.getDemoo .row {
   display: flex;
   justify-content: space-around;
   margin-top: 12%;
 }
-.getDemo .row .headerOne {
+.getDemoo .row .headerOne {
   border: 2px solid rgb(87, 158, 224);
   background-color: rgb(87, 158, 224);
 }
 
-.getDemo .row .headerTwo {
+.getDemoo .row .headerTwo {
   border: 2px solid #dfc017;
   background-color: #dfc017;
 }
-.getDemo .row .headerThree {
+.getDemoo .row .headerThree {
   border: 2px solid #e4821f;
   background-color: #e4821f;
 }
-.getDemo .row .headerFour {
+.getDemoo .row .headerFour {
   border: 2px solid #16b817;
   background-color: #16b817;
 }
-.getDemo .row .headerOne,
-.getDemo .row .headerTwo,
-.getDemo .row .headerThree,
-.getDemo .row .headerFour {
+.getDemoo .row .headerOne,
+.getDemoo .row .headerTwo,
+.getDemoo .row .headerThree,
+.getDemoo .row .headerFour {
   color: #fff;
   display: flex;
   align-items: center;
@@ -94,13 +122,13 @@ header ul li a {
   box-shadow: -1px 14px 11px 0px rgba(0, 0, 0, 0.45);
   height: 70px;
 }
-.getDemo .row .colOne,
-.getDemo .row .colTwo,
-.getDemo .row .colThree,
-.getDemo .row .colFour {
+.getDemoo .row .colOne,
+.getDemoo .row .colTwo,
+.getDemoo .row .colThree,
+.getDemoo .row .colFour {
   flex-basis: 20%;
 }
-.getDemo .row i {
+.getDemoo .row i {
   font-size: 25px;
   padding-right: 20px;
 }
@@ -368,24 +396,24 @@ summary i{
 a {
   text-decoration: none;
 }
-.getDemo .colOne .taskName h2,
-.getDemo .colOne p,
-.getDemo .colOne .taskName i {
+.getDemoo .colOne .taskName h2,
+.getDemoo .colOne p,
+.getDemoo .colOne .taskName i {
   color: black;
 }
-.getDemo .colTwo .taskName h2,
-.getDemo .colTwo p,
-.getDemo .colTwo .taskName i {
+.getDemoo .colTwo .taskName h2,
+.getDemoo .colTwo p,
+.getDemoo .colTwo .taskName i {
   color: black;
 }
-.getDemo .colThree .taskName h2,
-.getDemo .colThree p,
-.getDemo .colThree .taskName i {
+.getDemoo .colThree .taskName h2,
+.getDemoo .colThree p,
+.getDemoo .colThree .taskName i {
   color: black;
 }
-.getDemo .colFour .taskName h2,
-.getDemo .colFour p,
-.getDemo .colFour .taskName i {
+.getDemoo .colFour .taskName h2,
+.getDemoo .colFour p,
+.getDemoo .colFour .taskName i {
   color: black;
 }
 
@@ -433,7 +461,7 @@ a {
   .acc {
     display: none;
   }
-  .getDemo .row .headerOne {
+  .getDemoo .row .headerOne {
     margin-top: 100px;
   }
   header ul {
@@ -470,24 +498,24 @@ a {
   }
 
   /* end of header */
-  .getDemo .row {
+  .getDemoo .row {
     display: block;
     margin: 0;
   }
-  .getDemo .headerOne,
-  .getDemo .headerTwo,
-  .getDemo .headerThree,
-  .getDemo .headerFour {
+  .getDemoo .headerOne,
+  .getDemoo .headerTwo,
+  .getDemoo .headerThree,
+  .getDemoo .headerFour {
     margin-top: 100px;
   }
 
-  .getDemo .row .headerOne,
-  .getDemo .row .headerTwo,
-  .getDemo .row .headerThree,
-  .getDemo .row .headerFour {
+  .getDemoo .row .headerOne,
+  .getDemoo .row .headerTwo,
+  .getDemoo .row .headerThree,
+  .getDemoo .row .headerFour {
     height: 60px;
   }
-  .getDemo .row .colOne progress {
+  .getDemoo .row .colOne progress {
     width: 200px;
   }
 }
@@ -521,8 +549,8 @@ a {
   .acc {
     display: none;
   }
-  .getDemo .row .headerOne,
-  .getDemo .row .headerTwo {
+  .getDemoo .row .headerOne,
+  .getDemoo .row .headerTwo {
     margin-top: 100px;
   }
   header ul {
@@ -559,27 +587,27 @@ a {
   }
 
   /* end of header */
-  .getDemo {
+  .getDemoo {
     margin: 0 5%;
   }
-  .getDemo .row {
+  .getDemoo .row {
     display: flex;
     flex-wrap: wrap;
   }
-  .getDemo .row .colOne {
+  .getDemoo .row .colOne {
     width: 3000px;
   }
 
-  .getDemo .row .colOne,
-  .getDemo .row .colTwo,
-  .getDemo .row .colThree,
-  .getDemo .row .colFour {
+  .getDemoo .row .colOne,
+  .getDemoo .row .colTwo,
+  .getDemoo .row .colThree,
+  .getDemoo .row .colFour {
     flex-basis: 45%;
   }
-  .getDemo .headerOne,
-  .getDemo .headerTwo,
-  .getDemo .headerThree,
-  .getDemo .headerFour {
+  .getDemoo .headerOne,
+  .getDemoo .headerTwo,
+  .getDemoo .headerThree,
+  .getDemoo .headerFour {
     margin-top: 200px;
   }
 }

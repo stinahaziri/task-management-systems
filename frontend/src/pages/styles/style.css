@@ -17,8 +17,13 @@ html {
   width: 100%;
   align-items: center;
   top: 0;
-  /* padding: 30px 50px 0; */
-  z-index: 99;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); 
+  
+  border: none;
+  position: fixed;
 }
 .headeri ul {
   display: flex;
@@ -487,6 +492,8 @@ footer .row {
 footer .col,
 footer .formsFooter {
   margin: 10% 6%;
+  
+  
 }
 
 footer .col img {

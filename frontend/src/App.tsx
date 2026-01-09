@@ -11,6 +11,7 @@ import About from"./pages/About"
 import Pricing from "./pages/pricing"
 import Contact from "./pages/contact"
 
+
 function AppRoutes() {
   return (
     <Routes>
@@ -20,6 +21,7 @@ function AppRoutes() {
       <Route path="/about" element={<About/>} />
       <Route path="/pricing" element={<Pricing/>} />
       <Route path="/contact" element={<Contact/>} />
+    
 
       <Route path="/addTask" element={<AddTask/>} />
       <Route path="/infoTask/:id" element={<InfoTask/>}/>

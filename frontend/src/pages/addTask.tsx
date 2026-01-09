@@ -30,7 +30,7 @@ function AddTask() {
 
     try {
       await axios.post("http://localhost:5165/backend/TaskEntity", dataToSend);
-      navigate("/"); // Shko te faqja kryesore
+      navigate("/userManagment"); // Shko te faqja kryesore
     } catch (error) {
       alert("Gabim gjate ruajtjes!");
     }
@@ -39,7 +39,7 @@ function AddTask() {
   return (
     <>
       <Header />
-      <section className="signUp">
+      <section className="signUpp">
         <div className="colum">
     
         <h1 className="tittle">Add New Task</h1>

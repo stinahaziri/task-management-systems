@@ -1,5 +1,5 @@
 
-.signUp {
+.signUpp {
   /* position: absolute;
   top: 50%;
   left: 50%;
@@ -12,7 +12,7 @@
   height: 100vh;
   
 }
-.signUp .tittle {
+.signUpp .tittle {
   text-align: center;
   font-size: 50px;
 
@@ -32,11 +32,11 @@ text-align: center;
 }
 
 
-.signUp input::placeholder {
+.signUpp input::placeholder {
   color: #20509e;
   
 }
-.signUp input,textarea{
+.signUpp input,textarea{
   border: 1px solid #20509e;
 }
 

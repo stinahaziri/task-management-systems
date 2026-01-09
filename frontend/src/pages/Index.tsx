@@ -53,8 +53,13 @@ return(
       </Link>
       <li><a href="contact.html">Contact</a></li>
       <li>
+        <Link to="/userManagment" className="nav-item">User</Link>
+      </li>
+      <li>
+
         <a className="singUp" href="signUp.html">Sign Up Free</a>
       </li>
+      
     </ul>
 
   </header>
