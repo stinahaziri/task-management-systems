@@ -1,0 +1,4 @@
+public DbSet<ApplicationUser> Users { get; set; }
+public DbSet<TaskEntity> TaskEntity { get; set; }
+public DbSet<TaskAssignments> TaskAssignments { get; set; }
+public DbSet<SystemConfiguration> SystemConfigurations { get; set; }
