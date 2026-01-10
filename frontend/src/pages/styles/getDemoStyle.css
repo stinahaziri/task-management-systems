@@ -101,8 +101,8 @@ header ul li a {
   background-color: #dfc017;
 }
 .getDemoo .row .headerThree {
-  border: 2px solid #e4821f;
-  background-color: #e4821f;
+  border: 2px solid #BF0000;
+  background-color: #BF0000;
 }
 .getDemoo .row .headerFour {
   border: 2px solid #16b817;
@@ -313,8 +313,9 @@ summary i{
   background-color: #fff;
   box-shadow: -1px 14px 11px 0px rgba(0, 0, 0, 0.55);
   height: auto;
-  border-top: 5px solid #e4821f;
+  border-top: 5px solid  #BF0000;
 }
+
 
 .cardThree .avatar img {
   border-radius: 50%;
@@ -334,6 +335,16 @@ summary i{
 }
 
 /* card Four */
+  .cardThree {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  text-decoration: line-through;
+  color: red;
+}
+
+.cardThree:hover {
+  opacity: 1;
+}
 
 .cardThree progress {
   margin-left: 7px;
