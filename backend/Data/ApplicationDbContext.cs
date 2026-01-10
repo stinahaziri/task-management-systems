@@ -20,6 +20,8 @@ namespace backend.Data
         public DbSet<TaskEntity>TaskEntity{get; set;}
 
         public DbSet<TaskAssignments>TaskAssignments{get; set;}
+
+        public DbSet<User>User{get; set;}
         
     }
 }

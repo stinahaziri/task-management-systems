@@ -1,41 +1,43 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import Header from "./header"; // Header-i që përdor në faqe tjera
+import Header from "./header";
 import "./styles/loginStyle.css";
 
 function Login() {
   const navigate = useNavigate();
-
-  // State për LoginRequestDto
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Objektin qe pret .neti (LoginRequestDto)
     const loginData = {
       Email: email,
       Password: password,
     };
 
     try {
-      // Thirrja e API-t në portin 5165 (siç e kishim te AddTask)
-      const response = await axios.post("http://localhost:5165/api/auth/login", loginData);
+      const response = await axios.post("http://localhost:5165/backend/auth/login", loginData);
 
-      // Ruajtja e Token-it (TokenResponseDto)
-      if (response.data.accessToken) {
-        localStorage.setItem("token", response.data.accessToken);
-        localStorage.setItem("refreshToken", response.data.refreshToken);
+      // Ruajmë të dhënat që kthen serveri (Username, Role, Token)
+      if (response.data) {
+        localStorage.setItem("userRole", response.data.role);
+        localStorage.setItem("userName", response.data.username);
         
-        alert("Kyçja u krye me sukses!");
-        navigate("/"); // Shko te faqja kryesore
+        alert(`Mirëseerdhe ${response.data.username}!`);
+
+        // Ridrejtimi sipas Rolit
+        if (response.data.role === "Admin") {
+          navigate("/"); // Faqja për Admin
+        } else {
+          navigate("/userManagment"); // Faqja për User (ajo me Progress)
+        }
       }
     } catch (error) {
-      alert("Email ose fjalëkalimi i gabuar!");
+      alert("Email ose fjalëkalimi është gabim!");
     } finally {
       setLoading(false);
     }
@@ -47,9 +49,9 @@ function Login() {
       <section className="looginSection">
         <div className="colummLogin">
           <h1 className="tittle">Log In</h1>
-          <p className="subTittle">Mirësevini përsëri! Ju lutem shënoni të dhënat.</p>
+          <p className="subTittle">Mirësevini përsëri! Ju lutem shënoni të dhënat tuaja.</p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleLogin}>
             <div className="firstInput">
               <div className="inputGroup">
                 <input
@@ -75,7 +77,7 @@ function Login() {
             </div>
 
             <button className="ButonAdd" type="submit" disabled={loading}>
-              {loading ? "Duke u kyçur..." : "Sign In"}
+              {loading ? "Duke u kyçur..." : "Hyni"}
             </button>
 
             <div className="formFooter">

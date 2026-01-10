@@ -56,8 +56,8 @@ return(
         <Link to="/userManagment" className="nav-item">User</Link>
       </li>
       <li>
-
-        <a className="singUp" href="signUp.html">Sign Up Free</a>
+<Link to="/logIn" className="singUp">Sign Up Free</Link>
+        
       </li>
       
     </ul>
