@@ -12,6 +12,8 @@ function AddTask() {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("Tasks");
   const [date,setDate] = useState("");
+  const [curretnData,setCurretnData]= useState(new Date());
+  const [progress,setProgress] = useState("");
 
 
 
@@ -25,7 +27,9 @@ function AddTask() {
       Status: status,
       Priority: 1,
       Due_Date:date,//new Date().toISOString()
-      Created_By_Id: 1
+      Created_By_Id: 1,
+      Created_At:curretnData,
+      // Progress:progress
     };
 
     try {

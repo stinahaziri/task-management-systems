@@ -36,11 +36,11 @@ namespace backend.Controllers
         }
 
         //get me e marr veq 1
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetById([FromRoute] int ID)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             //e kom thirr ma nalt Itasken me taskRepo
-            var TaskEntity = await _taskRepo.GetByIdAsync(ID);
+            var TaskEntity = await _taskRepo.GetByIdAsync(id);
 
             if (TaskEntity == null)
             {
@@ -65,10 +65,10 @@ namespace backend.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int ID, [FromBody] UptadeTaskRequestDto updateDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UptadeTaskRequestDto updateDto)
         {
             //me lyp id per me editu
-            var taskModel = await _taskRepo.UpdateAsync(ID ,updateDto);
+            var taskModel = await _taskRepo.UpdateAsync(id ,updateDto);
             if (taskModel == null)
             {
                 return NotFound();
@@ -82,9 +82,9 @@ namespace backend.Controllers
         [HttpDelete]
         [Route("{id}")]
 
-        public async Task<IActionResult> Delete([FromRoute] int ID)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var taskModal = await _taskRepo.DeleteAsync(ID);
+            var taskModal = await _taskRepo.DeleteAsync(id);
             if (taskModal == null)
             {
                 return NotFound();

@@ -28,9 +28,9 @@ namespace backend.Repository
             return TaskModel;
         }
 
-        public async Task<TaskEntity?> DeleteAsync(int ID)
+        public async Task<TaskEntity?> DeleteAsync(int id)
         {//fetch our model
-        var TaskModel=await _context.TaskEntity.FirstOrDefaultAsync(x=>x.ID== ID);
+        var TaskModel=await _context.TaskEntity.FirstOrDefaultAsync(x=>x.ID==id);
             if (TaskModel== null)
             {
                 return null;
@@ -40,7 +40,7 @@ namespace backend.Repository
             return TaskModel;
         }
 
-        public async Task<TaskEntity?> GetByIdAsync(int ID)
+        public async Task<TaskEntity?> GetByIdAsync(int id)
         {
             // var TaskModel=await _context.TaskEntity.FirstOrDefaultAsync(x=>x.ID==ID);
             // if(TaskModel == null)
@@ -48,7 +48,7 @@ namespace backend.Repository
             //     return null;
             // }
             // return TaskModel;
-            return await _context.TaskEntity.FindAsync(ID);
+            return await _context.TaskEntity.FindAsync(id);
         }
 
         public async Task<List<TaskEntity>>GetListAsync()
@@ -56,9 +56,9 @@ namespace backend.Repository
             return await _context.TaskEntity.ToListAsync();
         }
 
-        public async Task<TaskEntity?> UpdateAsync(int ID, UptadeTaskRequestDto taskDto)
+        public async Task<TaskEntity?> UpdateAsync(int id, UptadeTaskRequestDto taskDto)
         {
-            var existingTask= await _context.TaskEntity.FirstOrDefaultAsync(x=> x.ID == ID);
+            var existingTask= await _context.TaskEntity.FirstOrDefaultAsync(x=> x.ID == id);
 
             if (existingTask == null)
             {
@@ -72,6 +72,8 @@ namespace backend.Repository
             existingTask.Status=taskDto.Status;
             existingTask.Priority=taskDto.Priority;
             existingTask.Due_Date=taskDto.Due_Date;
+            existingTask.Progress=taskDto.Progress;
+            
             existingTask.Created_By_Id=taskDto.Created_By_Id;
             
             await _context.SaveChangesAsync();

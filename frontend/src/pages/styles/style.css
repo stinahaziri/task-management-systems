@@ -121,7 +121,7 @@ input[type="text"]::placeholder {
   padding-top: 40px;
 }
 
-button {
+.formsFooter button {
   background: rgb(63, 61, 98);
   background: linear-gradient(
     90deg,

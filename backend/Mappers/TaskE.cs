@@ -20,6 +20,7 @@ namespace backend.Mappers
                 Priority=TaskEntityModel.Priority,
                 Due_Date=TaskEntityModel.Due_Date,
                 Created_By_Id=TaskEntityModel.Created_By_Id,
+                Progress=TaskEntityModel.Progress,
                 Created_At=TaskEntityModel.Created_At,
                 Updated_At=TaskEntityModel.Updated_At,
             };
@@ -34,6 +35,7 @@ namespace backend.Mappers
                 Priority = dto.Priority,
                 Description=dto.Description,
                 Due_Date = dto.Due_Date,
+                Progress=dto.Progress,
                 Created_By_Id = dto.Created_By_Id,
                 Created_At = DateTime.UtcNow,
                 Updated_At = DateTime.UtcNow

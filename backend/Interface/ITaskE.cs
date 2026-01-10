@@ -13,11 +13,11 @@ namespace backend.Interface
         //task-tregon se kjo metod esht asinkrone //kthen nje list me taskentity
 
         Task<List<TaskEntity>>GetListAsync();//GetAll
-        Task<TaskEntity?>GetByIdAsync(int Id);//Get by Id//        
+        Task<TaskEntity?>GetByIdAsync(int id);//Get by Id//        
         Task<TaskEntity>CreateAsync(TaskEntity TaskModel); //create
-        Task<TaskEntity?>UpdateAsync(int Id,UptadeTaskRequestDto taskDto);
+        Task<TaskEntity?>UpdateAsync(int id,UptadeTaskRequestDto taskDto);
         
-        Task<TaskEntity?>DeleteAsync(int Id );
+        Task<TaskEntity?>DeleteAsync(int id );
 
 
 

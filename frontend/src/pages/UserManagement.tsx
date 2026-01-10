@@ -8,8 +8,8 @@ import { faPlus, faCircleCheck, faGear, faMagnifyingGlass, faEllipsisVertical, f
 
 function UserManagement() {
   const [tasks, setTasks] = useState<any[]>([]); // State per taska
-  const [currentData,setCurrentData]= useState(new Date());
-   const [progresi,setProgresi]= useState();
+  
+   
 
   // marrim te dhenat nga backend
   useEffect(() => {
@@ -36,6 +36,8 @@ function UserManagement() {
       }
     }
   };
+
+
 
   // progres
   // const getProgressValue = (status: string) => {
@@ -82,21 +84,41 @@ function UserManagement() {
                     </details>
                   </div>
                   <Link to={`/infoTask/${item.id}`}  key={item.id}>
-                  {/* <p>{new Date(item.due_Date).toDateString()} / {new Date(currentData).toDateString()}</p> */}
                   
-                  <label className="LableTask" >Today's data:</label>
-                  <p id="todayDate"> {new Date(currentData).toDateString()}</p>
+                  <label className="LableTask" >Created At:</label>
+                  <p id="todayDate"> {new Date(item.created_At).toDateString()}</p>
                   
                   <label className="LableTask" htmlFor="deadline">Deadline:</label>
                   <p id="deadline">{new Date(item.due_Date).toDateString()} </p>
                   
         
-                  
-               <progress  className="progress" id="file" value="0" max="100"> 0% </progress>
-              <label className="labelProgres" htmlFor="file">0%</label>
-            
-              <progress className="progress" id="file" value="30" max="100"> 0% </progress>
-              <label className="labelProgres" htmlFor="file">0%</label>
+  <div className="progresiUser">
+  <div className="progresiUserCol">
+    <div
+      className="progresCol"
+      style={{
+        width: `${item.progress}%`,
+        backgroundColor:
+          item.progress < 50
+            ? "#EC5840"   
+            : item.progress <= 90
+            ? "#f1c40f"    // e verdhe
+
+             : item.progress == 100
+            ? "3ADB76"
+            :"#fdfffe"
+
+              
+      }}
+    ></div>
+  </div>
+
+  <div className="labelProgres">
+    <label>{item.progress}%</label>
+  </div>
+</div>
+               {/* <progress  className="progress" id="file" value={item.progress} max="100">0%</progress>
+              <label className="labelProgres" htmlFor="file">{item.progress}</label> */}
                </Link>
                 </div>
                  

@@ -27,11 +27,59 @@
   pading
 
 } */
-progress{
-
-  width: 50%;
-  height: 20px;
+/* //progresi */
+ .progresiInfo{
+  padding-top: 40px;
+  display: flex;
+   align-items: center;
 }
+.progresiInfo .progresiInfoCol{
+  /* background-color: ; */
+  height: 10px;
+  color: #00b884;
+  border: 1px solid grey;
+  border-radius: 10px;
+  width: 40%;
+  
+}
+.progresiInfo .progresiInfoCol .infoCol{
+  height: 10px;
+  border-radius: 10px;
+}
+
+/* butoni */
+.butonsOfTask{
+  display: flex;
+  gap: 10px;
+  padding-left: 10px;
+  align-items: center;
+  align-self: center;
+}
+.butonsOfTaskMinus{
+  width:40px;
+  height: 30px;
+  cursor: pointer;
+  border: none;
+  border: 1px solid #5c5a5a;
+  border-radius: 6px;
+    background-color: #f0ecfc;
+background-image: linear-gradient(315deg, #f0ecfc 0%, #c797eb 74%);
+color: white;
+border: 1px solid #c797eb;
+}
+.butonsOfTaskPlus{
+  width:40px;
+  height: 30px;
+  cursor: pointer;
+  border: none;
+  border: 1px solid #5c5a5a;
+  border-radius: 6px;
+    background-color: #f0ecfc;
+background-image: linear-gradient(315deg, #f0ecfc 0%, #c797eb 74%);
+color: white;
+border: 1px solid #c797eb;
+}
+
 .data,
 .addEpic {
   display: flex;
@@ -265,9 +313,9 @@ footer input[type="text"] {
   background-color: #e9ecf7;
   width: 80px;
   font-size: 15px;
-
   text-transform: uppercase;
   text-align: center;
+  margin-bottom: 20px;
 }
 .colum .toDo table td img {
   border-radius: 50%;
@@ -286,7 +334,10 @@ footer input[type="text"] {
   align-items: center;
   gap: 10px;
 }
-
+.create h5{
+  padding-top: 10px;
+ 
+}
 @media screen and (max-width: 480px) {
   /* .infoTask .row {
     flex-direction: column;

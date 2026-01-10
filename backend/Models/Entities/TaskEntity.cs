@@ -17,12 +17,12 @@ namespace backend.Models.Entities
         public string Status { get; set;}= string.Empty;
 
         public int  Priority { get; set;}
-
+        public int Progress { get; set; } = 0 ; 
         public DateTime Due_Date { get; set; }=DateTime.Now;
 
         public int Created_By_Id { get; set; }
 
-        public DateTime Created_At { get; set; }
+        public DateTime Created_At { get; set; }=DateTime.Now;
         public DateTime Updated_At { get; set; }
 
         //one to many
