@@ -51,10 +51,14 @@ return(
       <Link to={"/pricing"}>
       <li><a href="pricing.html">Pricing</a></li>
       </Link>
+
+      <Link to={"/contact"}>
+      
       <li><a href="contact.html">Contact</a></li>
-      <li>
+      </Link>Microsoft.AspNetCore.Identity.EntityFrameworkCore
+      {/* <li>
         <Link to="/userManagment" className="nav-item">User</Link>
-      </li>
+      </li> */}
       <li>
 <Link to="/logIn" className="singUp">Sign Up Free</Link>
         

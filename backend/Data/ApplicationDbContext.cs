@@ -5,11 +5,15 @@ using System.Threading.Tasks;
 using backend.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
+
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 namespace backend.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser>  //DbContext
     {
         //kinstruktori
+
         public ApplicationDbContext(DbContextOptions dbContextOptions )
         :base(dbContextOptions)
         {

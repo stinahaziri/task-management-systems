@@ -1,8 +1,12 @@
 using backend.Data;
 using backend.Interface;
+using backend.Models.Entities;
 using backend.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +40,43 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     
 });
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit=true;
+    options.Password.RequireLowercase=true; 
+    options.Password.RequireUppercase=true;
+    options.Password.RequireNonAlphanumeric=true;
+    options.Password.RequiredLength=8;
+    options.Password.RequiredUniqueChars=1;
+
+})
+.AddEntityFrameworkStores<ApplicationDbContext>();
+// #pragma warning disable CS8604 // Possible null reference argument.
+
+//per hyrje,dalje ,indentifikim me perdor JWT ,kerkon nje token
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme=
+    options.DefaultChallengeScheme=
+    options.DefaultScheme=
+    options.DefaultSignInScheme=
+    options.DefaultSignOutScheme=JwtBearerDefaults.AuthenticationScheme;
+
+})//ketu i jep roje kriteret me e dallu token fallc me originalin
+.AddJwtBearer(options=>
+options.TokenValidationParameters=new TokenValidationParameters
+{
+ ValidateIssuer=true,//serveri kontrollons e kush ka leshu token 
+ ValidIssuer=builder.Configuration["JWT:Issuer"],//prano tokenat e leshuar nga ky eemr
+ ValidateAudience=true,
+ ValidAudience=builder.Configuration["JWT:Audience"],
+ IssuerSigningKey = new SymmetricSecurityKey(
+    System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
+ )
+
+});
+// #pragma warning restore CS8604 // Possible null reference argument.
+
 builder.Services.AddScoped<ITaskE,TaskRepositor>();//ura lidhse me interfacin edhe klasen e cila e implementon ata
 var app = builder.Build();
 
@@ -51,7 +92,8 @@ if (app.Environment.IsDevelopment())
 
 // Use CORS before MapControllers
 app.UseCors("AllowReact");
-
+app.UseAuthentication();
+app.UseAuthentication();
 // app.UseHttpsRedirection()
 
 app.MapControllers();
