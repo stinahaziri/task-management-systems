@@ -12,7 +12,7 @@ namespace backend.Data
 {
     public class ApplicationDbContext : IdentityDbContext<AppUser>  //DbContext
     {
-        //kinstruktori
+        //konstruktori
 
         public ApplicationDbContext(DbContextOptions dbContextOptions )
         :base(dbContextOptions)
@@ -26,6 +26,28 @@ namespace backend.Data
         public DbSet<TaskAssignments>TaskAssignments{get; set;}
 
         public DbSet<User>User{get; set;}
+
+        //rolet
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            List<IdentityRole> roles = new List<IdentityRole>
+            {
+                new IdentityRole
+                {
+                    Name="Admin",
+                    NormalizedName ="ADMIN"
+                },
+                new IdentityRole
+                {
+                    Name="User",
+                    NormalizedName ="User"
+                }
+            };
+            builder.Entity<IdentityRole>().HasData(roles);
+        }
+
         
     }
 }

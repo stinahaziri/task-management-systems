@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using backend.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,6 +79,7 @@ options.TokenValidationParameters=new TokenValidationParameters
 // #pragma warning restore CS8604 // Possible null reference argument.
 
 builder.Services.AddScoped<ITaskE,TaskRepositor>();//ura lidhse me interfacin edhe klasen e cila e implementon ata
+builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 //zbatimi i swegger

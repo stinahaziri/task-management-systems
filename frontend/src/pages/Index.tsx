@@ -55,7 +55,7 @@ return(
       <Link to={"/contact"}>
       
       <li><a href="contact.html">Contact</a></li>
-      </Link>Microsoft.AspNetCore.Identity.EntityFrameworkCore
+      </Link>
       {/* <li>
         <Link to="/userManagment" className="nav-item">User</Link>
       </li> */}
