@@ -5,6 +5,7 @@
   padding: 100px 0;
   background-color: #f9f9f9;
   min-height: 80vh;
+  
 }
 
 .columSign {
@@ -12,9 +13,8 @@
   padding: 50px;
   border-radius: 15px;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 450px;
   text-align: center;
+  margin-top: 65px;
 }
 
 .columSign .tittle {
@@ -29,12 +29,15 @@
   font-size: 14px;
 }
 
-.columSign.firstInput {
+.columSign.firstInputSign {
   margin-bottom: 15px;
 }
-
-.columSign.inputGroup input {
-  width: 100%;
+.forma{
+  display: grid;
+  gap: 20px;
+}
+.columSign .inputGroupSign input {
+ width: 100%;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -43,7 +46,18 @@
   transition: 0.3s;
 }
 
-.columSign .inputGroup input:focus {
+.columSign .inputGroupSignn input {
+
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #fdfdfd;
+  transition: 0.3s;
+}
+
+.columSign .inputGroupSign input:focus,
+ .columSign .inputGroupSignn input:focus{
   border-color: #007bff;
   outline: none;
   background: white;
@@ -61,6 +75,14 @@
   cursor: pointer;
   transition: 0.3s;
   margin-top: 10px;
+}
+.SecondInputSign{
+  display: flex;
+  gap: 20px;
+}
+.firstInputSign{
+display: grid;
+gap: 30px;
 }
 
 .columSign .ButonAdd:hover {

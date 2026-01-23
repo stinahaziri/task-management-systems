@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh; /* E mban ne qender te ekranit */
+  height: 100vh; 
   background-color: transparent;
 }
 
@@ -14,9 +14,12 @@
   width: 100%;
   max-width: 450px;
   text-align: center;
-  margin-top: 200px;
+  margin-top: 100px;
+ 
 }
-
+.colummLogin p{
+padding-top: 10px;
+}
 .colummLogin .tittle {
   font-size: 32px;
   margin-bottom: 10px;
@@ -29,11 +32,12 @@
   margin-bottom: 30px;
 }
 
-.colummLogin .firstInput {
+.colummLogin .firstInputt {
   margin-bottom: 20px;
+  
 }
 
-.colummLogin .inputGroup input {
+.colummLogin .inputGroupp input {
   width: 100%;
   padding: 12px 15px;
   border: 1px solid #ddd;
@@ -42,7 +46,7 @@
   box-sizing: border-box; /* Shmang daljen jashte div-it */
 }
 
-.colummLogin .inputGroup input:focus {
+.colummLogin .inputGroupp input:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -71,6 +75,7 @@
 .colummLogin .formFooter {
   margin-top: 20px;
   font-size: 14px;
+   padding-bottom: 30px;
 }
 
 .colummLogin .formFooter a {

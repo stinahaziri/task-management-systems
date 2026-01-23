@@ -10,7 +10,7 @@ import {toast} from"react-toastify"
 
       // kur serveri kthen nje list me gabime
       if (Array.isArray(err?.data.errors)) {
-        for (let val of err.data.errors) {
+        for (let val of err?.data.errors) {
           toast.warning(val.description);
         }
       } 

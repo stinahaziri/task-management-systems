@@ -48,7 +48,7 @@ export const UserProvider = ({ children }: Props) => {
         setToken(res.data.token);
         setUser(userObj);
         toast.success("Mirësevini!");
-        navigate("/search");
+        navigate("/userManagment");
       }
     } catch (e) {
       toast.warning("Gabim gjatë kyçjes");
@@ -69,7 +69,7 @@ export const UserProvider = ({ children }: Props) => {
         setToken(res.data.token);
         setUser(userObj);
         toast.success("Regjistrimi u krye!");
-        navigate("/search");
+        navigate("/login");
       }
     } catch (e) {
       toast.warning("Gabim gjatë regjistrimit");
