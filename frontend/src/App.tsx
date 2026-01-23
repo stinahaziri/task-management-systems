@@ -15,8 +15,16 @@ import Login from"./pages/Login"
 import SignIn from './pages/SignIn';
 
 
+import AuthService from './Services/AuthService';
+import { ToastContainer } from 'react-toastify';
+
+
+import "react-toastify/dist/ReactToastify.css"
+
 function AppRoutes() {
   return (
+    <>
+    
     <Routes>
       {/* Main Page */}
       <Route path="/" element={<Index/>}/>
@@ -31,8 +39,13 @@ function AppRoutes() {
 
       <Route path="/addTask" element={<AddTask/>} />
       <Route path="/infoTask/:id" element={<InfoTask/>}/>
+
+      
+      <Route path="/authService" element={<AuthService/>} />
       
     </Routes>
+    <ToastContainer/>
+    </>
   );
 }
 
