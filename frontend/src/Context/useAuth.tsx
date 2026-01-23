@@ -42,7 +42,7 @@ export const UserProvider = ({ children }: Props) => {
         localStorage.setItem("token", res.data.token);
         const userObj = {
           userName: res.data.userName,
-          email: res.data.Email,
+          email: res.data.email,
         };
         localStorage.setItem("user", JSON.stringify(userObj));
         setToken(res.data.token);
@@ -63,7 +63,7 @@ export const UserProvider = ({ children }: Props) => {
         localStorage.setItem("token", res.data.token);
         const userObj = {
           userName: res.data.userName,
-          email: res.data.Email,
+          email: res.data.email,
         };
         localStorage.setItem("user", JSON.stringify(userObj));
         setToken(res.data.token);
@@ -81,7 +81,7 @@ export const UserProvider = ({ children }: Props) => {
     localStorage.removeItem("user");
     setToken(null);
     setUser(null);
-    navigate("/");
+    navigate("/login");
   };
 
   const isLoggedIn = () => {

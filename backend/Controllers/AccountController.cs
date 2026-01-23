@@ -29,7 +29,7 @@ namespace backend.Controllers
         }
 //login
 [HttpPost("login")]
-public async Task<IActionResult> LogIn(LoginDto loginDto)
+public async Task<IActionResult> LogIn([FromBody] LoginDto loginDto)
         {
          if(!ModelState.IsValid)   
          return BadRequest(ModelState);
@@ -109,9 +109,6 @@ public async Task<IActionResult> LogIn(LoginDto loginDto)
             }
         }
 
-        private IActionResult Ok(object value1, object value2, object value3)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

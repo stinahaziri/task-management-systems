@@ -31,9 +31,9 @@ function Header() {
           <NavLink to="/contact" className="nav-item">Contact</NavLink>
         </li>
         
-         <li>
+         {/* <li>
           <NavLink to="/userManagment" className="nav-item">User</NavLink>
-        </li>
+        </li> */}
         <li>
            <NavLink to="/login" className="singUp">Sign Up</NavLink>
           {/* <a  className="singUp">Sign Up Free</a> */}

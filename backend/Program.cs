@@ -49,7 +49,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric=true;
     options.Password.RequiredLength=8;
     options.Password.RequiredUniqueChars=1;
-
+ options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ "; 
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
 // #pragma warning disable CS8604 // Possible null reference argument.

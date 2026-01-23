@@ -1,41 +1,37 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import Header from "./header";
-import "./styles/signInStyle.css"; 
+import "./styles/signInStyle.css";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { UserContext } from "../Context/useAuth";
+
+type SignUpFormsInputs = {
+  userName: string;
+  email: string;
+  password: string;
+};
+
+const validation = Yup.object().shape({
+  userName: Yup.string().required("Username është i detyrueshëm"),
+  email: Yup.string().email("Email jo-valid").required("Email është i detyrueshëm"),
+  password: Yup.string().min(8, "Së paku 8 karaktere").required("Password është i detyrueshëm"),
+});
 
 function SignUp() {
-  const navigate = useNavigate();
+  const { registerUser } = useContext(UserContext);
 
-  // State-et për fushat e regjistrimit
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [role, setRole] = useState("User"); // Default roli është User
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignUpFormsInputs>({ resolver: yupResolver(validation) });
 
-  // const handleRegister = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   // DTO-ja që pret Backend-i (RegisterDto)
-  //   const registerData = {
-  //     Username: `${firstName} ${lastName}`, // Bashkojmë emrin dhe mbiemrin
-  //     Email: email,
-  //     Password: password,
-  //     Role: role
-  //   };
-
-  //   try {
-  //     // Thirrja e API-t për regjistrim
-  //     await axios.post("http://localhost:5165/backend/auth/register", registerData);
-      
-  //     alert("Llogaria u krijua me sukses! Tani mund të kyçeni.");
-  //     navigate("/login"); // Pas regjistrimit, dërgoje te Logini
-  //   } catch (error: any) {
-  //     alert(error.response?.data || "Gabim gjatë regjistrimit!");
-  //     console.error(error);
-  //   }
-  // };
+  const handleRegister = (data: SignUpFormsInputs) => {
+     const cleanUsername = data.userName.replace(/\s/g, "");
+    registerUser(data.email, data.userName, data.password);
+  };
 
   return (
     <>
@@ -43,62 +39,28 @@ function SignUp() {
       <section className="signInMainn">
         <div className="columSign">
           <h1 className="tittle">Sign Up</h1>
-          <p className="descriptionText">Krijoni llogarinë tuaj duke plotësuar të dhënat.</p>
-{/* onSubmit={handleRegister} */}
-          <form className="forma">
-            <div className="firstInputSign">
-              <div className="inputGroupSign">
-                <input 
-                  type="text" 
-                  placeholder="First Name" 
-                  // onChange={(e) => setFirstName(e.target.value)} 
-                  required 
-                />
-              </div>
-              <div className="inputGroupSign">
-                <input 
-                  type="text" 
-                  placeholder="Last Name" 
-                  // onChange={(e) => setLastName(e.target.value)} 
-                  required 
-                />
-              </div>
+          <p className="descriptionText">Krijoni llogarinë tuaj.</p>
+
+          <form className="forma" onSubmit={handleSubmit(handleRegister)}>
+            <div className="inputGroupSignn">
+              <input type="text" placeholder="Username" {...register("userName")} />
+              {errors.userName && <p className="errorMsg">{errors.userName.message}</p>}
             </div>
 
-            <div className="SecondInputSign">
-              <div className="inputGroupSignn">
-                <input 
-                  type="email" 
-                  placeholder="Email" 
-                  // onChange={(e) => setEmail(e.target.value)} 
-                  required 
-                />
-              </div>
-              <div className="inputGroupSignn">
-                <input 
-                  type="password" 
-                  placeholder="Password" 
-                  // onChange={(e) => setPassword(e.target.value)} 
-                  required 
-                />
-              </div>
+            <div className="inputGroupSignn">
+              <input type="email" placeholder="Email" {...register("email")} />
+              {errors.email && <p className="errorMsg">{errors.email.message}</p>}
             </div>
 
-            {/* Zgjedhja e Rolit */}
-            {/* <div className="inputGroup" style={{marginTop: "10px"}}>
-                <label style={{marginRight: "10px", color: "white"}}>Regjistrohu si:</label>
-                <select 
-                    value={role} 
-                    onChange={(e) => setRole(e.target.value)}
-                    style={{padding: "5px", borderRadius: "5px"}}
-                >
-                    <option value="User">User</option>
-                    <option value="Admin">Admin</option>
-                </select>
-            </div> */}
+            <div className="inputGroupSignn">
+              <input type="password" placeholder="Password" {...register("password")} />
+              {errors.password && <p className="errorMsg">{errors.password.message}</p>}
+            </div>
 
             <div className="butoniS">
-              <button className="ButonAdd" type="submit">Krijo Llogarinë</button>
+              <button className="ButonAdd" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Duke u regjistruar..." : "Krijo Llogarinë"}
+              </button>
             </div>
 
             <div className="footerLink">

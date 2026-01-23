@@ -4,11 +4,14 @@ import './styles/getDemoStyle.css';
 import axios from "axios";
 import Header from "./header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faCircleCheck, faGear, faMagnifyingGlass, faEllipsisVertical, faTrashCan, faCircleXmark,faPaperclip, faMessage } from '@fortawesome/free-solid-svg-icons'
+import { useContext } from "react";
+import { faPlus, faCircleCheck, faGear, faMagnifyingGlass, faEllipsisVertical, faTrashCan, faCircleXmark, faPaperclip, faMessage } from '@fortawesome/free-solid-svg-icons'
+import { UserContext } from "../Context/useAuth";
 
+import logo from "./image/Capture-removebg-preview.png";
 function UserManagement() {
   const [tasks, setTasks] = useState<any[]>([]); // State per taska
-
+  const { logout, user } = useContext(UserContext);
 
 
   // marrim te dhenat nga backend
@@ -38,28 +41,73 @@ function UserManagement() {
   };
 
 
-// const deadLine=()=>{
-//   if(due_Date < created_At){
 
-//   }
-// }
-  // progres
-  // const getProgressValue = (status: string) => {
-  //   if (status === "Finished") return 100;
-  //   if (status === "Review") return 75;
-  //   if (status === "In Progress") return 40;
-  //   return 10;
-  //   // };
-  // const ValueOfProgres=(setProgresi:number)=>{
-  //   if(setProgresi==0 || setProgresi==10 ){
-  //   style={}
-  //   }
-  // }
+
   return (
     <>
-      <Header />
+      <header className="headeriMenagement">
+        <div>
+          <a href="index.html">
+            <img src={logo} alt="" />
+          </a>
+        </div>
+        <input type="checkbox" id="check" />
+        <label htmlFor="check" className="checkInput">
+          <i className="fa-solid fa-bars"></i>
+        </label>
+
+        <ul>
+          <Link to={"/"}>
+            <li><a className="active">Home</a></li>
+          </Link>
+          <Link to={"/about"}>
+            <li><a href="about.html">About</a></li>
+          </Link>
+          <Link to={"/pricing"}>
+            <li><a href="pricing.html">Pricing</a></li>
+          </Link>
+
+          <Link to={"/contact"}>
+
+            <li><a href="contact.html">Contact</a></li>
+          </Link>
+         
+          <li>
+            {/* <Link to="/logIn" className="singUp">Sign Up Free</Link> */}
+  <span style={{ fontSize: '14px', color: '#777' }}>
+       Përdoruesi: <b>{user?.userName}</b>
+    </span>
+
+        <button 
+      onClick={logout} 
+      style={{
+        marginLeft: '15px',
+        backgroundColor: '#ff4d4d',
+        color: 'white',
+        border: 'none',
+        padding: '5px 10px',
+        borderRadius: '5px',
+        cursor: 'pointer'
+      }}
+    >
+      Log Out
+    </button>
+          </li>
+
+        </ul>
+
+      </header>
+
       <section className="getDemoo">
         <div className="contanier">
+
+          <div className="user-info">
+            <h1>Hello</h1>
+            <span style={{ fontSize: '14px', color: '#777' }}>
+              Përdoruesi: <b>{user?.userName}</b>
+            </span>
+          </div>
+
           <div className="row">
 
             {/* KOLONA 1: TASKS */}
@@ -70,9 +118,10 @@ function UserManagement() {
                 <Link to="/addTask">
                   <FontAwesomeIcon icon={faPlus} className="plusIcon" />
                 </Link>
+
               </div>
 
-              {tasks.filter(t =>t.progress>=0 && t.progress<50 ).map((item) => (
+              {tasks.filter(t => t.progress >= 0 && t.progress < 50).map((item) => (
                 <div className="card" key={item.id}>
 
                   <div className="taskName">
@@ -128,7 +177,7 @@ function UserManagement() {
                 <h1>In Progress</h1>
                 <FontAwesomeIcon icon={faGear} className="plusIcon" />
               </div>
-              {tasks.filter(t =>t.progress>= 50 && t.progress<90).map((item) => (
+              {tasks.filter(t => t.progress >= 50 && t.progress < 90).map((item) => (
                 <div className="cardtwo" key={item.id}>
                   <div className="taskName">
                     <h2>{item.title}</h2>
@@ -177,10 +226,10 @@ function UserManagement() {
                 <h1>Finished</h1>
                 <FontAwesomeIcon icon={faCircleCheck} className="plusIcon" />
               </div>
-              {tasks.filter(t => t.progress==100).map((item) => (
+              {tasks.filter(t => t.progress == 100).map((item) => (
                 <div className="cardFour" key={item.id}>
                   <div className="taskName"><h2>{item.title}</h2><details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary></details></div>
-                   <Link to={`/infoTask/${item.id}`} key={item.id}>
+                  <Link to={`/infoTask/${item.id}`} key={item.id}>
 
                     <label className="LableTask" >Created At:</label>
                     <p id="todayDate"> {new Date(item.created_At).toDateString()}</p>
@@ -212,7 +261,7 @@ function UserManagement() {
                     </div>
                   </Link>
                 </div>
-                
+
               ))}
             </div>
 
@@ -226,22 +275,22 @@ function UserManagement() {
               {tasks.filter(t => t.due_Date < t.created_At).map((item) => (
                 <div className="cardThree" key={item.id}>
                   <div className="taskName"><h2>{item.title}</h2><details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary></details></div>
-                    <Link to={`/infoTask/${item.id}`} key={item.id}>
+                  <Link to={`/infoTask/${item.id}`} key={item.id}>
 
                     <label className="LableTask" >Created At:</label>
                     <p id="todayDate"> {new Date(item.created_At).toDateString()}</p>
 
                     <label className="LableTask" htmlFor="deadline">Deadline:</label>
-                    <p 
-                    style={{
-                            
-                            color:
-                              item.due_Date < item.created_At
-                              
-                                ? "red"
-                               : "#fdfffe"
-                          }}
-                    id="deadline">{new Date(item.due_Date).toDateString()} </p>
+                    <p
+                      style={{
+
+                        color:
+                          item.due_Date < item.created_At
+
+                            ? "red"
+                            : "#fdfffe"
+                      }}
+                      id="deadline">{new Date(item.due_Date).toDateString()} </p>
 
 
                     <div className="progresiUser">
@@ -270,7 +319,7 @@ function UserManagement() {
               ))}
             </div>
 
-            
+
 
           </div>
         </div>
