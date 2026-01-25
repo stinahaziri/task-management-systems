@@ -25,6 +25,7 @@ namespace backend.Controllers
 
         //get-i tash
         //get krejt me i marr
+        
         [HttpGet]
         public async Task<IActionResult> GetALL()//na kthen requestin si metod cila o 200 ,404 e qisi sene
         {

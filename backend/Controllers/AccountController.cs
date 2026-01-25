@@ -53,6 +53,15 @@ public async Task<IActionResult> LogIn([FromBody] LoginDto loginDto)
         }
 
 
+[HttpGet("users")]
+public async Task<IActionResult> GetAllUsers()
+{
+    var users = await _userMenager.Users
+        .Select(x => new { x.Id, x.UserName }) 
+        .ToListAsync();
+
+    return Ok(users);
+}
 //register
         [HttpPost("register")]
         public async Task<IActionResult>Register([FromBody] RegisterDto rigesterDto)

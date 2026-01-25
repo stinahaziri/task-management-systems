@@ -12,6 +12,7 @@ import logo from "./image/Capture-removebg-preview.png";
 function UserManagement() {
   const [tasks, setTasks] = useState<any[]>([]); // State per taska
   const { logout, user } = useContext(UserContext);
+   const [assignedUserIds, setAssignedUserIds] = useState<string[]>([]);
 
 
   // marrim te dhenat nga backend
@@ -20,6 +21,7 @@ function UserManagement() {
       try {
 
         const response = await axios.get("http://localhost:5165/backend/TaskEntity");
+        console.log("Te dhenat nga API:", response.data);
         setTasks(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -75,7 +77,7 @@ function UserManagement() {
           <li>
             {/* <Link to="/logIn" className="singUp">Sign Up Free</Link> */}
   <span style={{ fontSize: '14px', color: '#777' }}>
-       Përdoruesi: <b>{user?.userName}</b>
+       User: <b>{user?.userName}</b>
     </span>
 
         <button 
@@ -101,12 +103,12 @@ function UserManagement() {
       <section className="getDemoo">
         <div className="contanier">
 
-          <div className="user-info">
+          {/* <div className="user-info">
             <h1>Hello</h1>
             <span style={{ fontSize: '14px', color: '#777' }}>
               Përdoruesi: <b>{user?.userName}</b>
             </span>
-          </div>
+          </div> */}
 
           <div className="row">
 
@@ -124,16 +126,43 @@ function UserManagement() {
               {tasks.filter(t => t.progress >= 0 && t.progress < 50).map((item) => (
                 <div className="card" key={item.id}>
 
-                  <div className="taskName">
-                    <h2>{item.title}</h2>
-                    <hr />
-                    <details>
-                      <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
-                      <h4 onClick={() => handleDelete(item.id)} style={{ color: 'red', cursor: 'pointer' }}>
-                        <FontAwesomeIcon icon={faTrashCan} /> Delete
-                      </h4>
-                    </details>
-                  </div>
+<div className="taskName">
+  <h2>{item.title}</h2>
+  
+  
+  <div className="assigned-users-list" style={{ display: 'flex', gap: '5px', marginTop: '5px' }}>
+    {item.appUsers && item.appUsers.map((u: any) => (
+      <div 
+        key={u.id} 
+        title={u.userName} // Kur dërgon mausin mbi rreth, shfaqet emri i plotë
+        style={{
+          width: '25px',
+          height: '25px',
+          borderRadius: '50%',
+          backgroundColor: '#007bff',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '10px',
+          fontWeight: 'bold',
+          border: '1px solid white'
+        }}
+      >
+        {/* Shfaqim 2 shkronjat e para të emrit */}
+        {u.userName.substring(0, 2).toUpperCase()}
+      </div>
+    ))}
+  </div>
+
+  <hr />
+  <details>
+    <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
+    <h4 onClick={() => handleDelete(item.id)} style={{ color: 'red', cursor: 'pointer' }}>
+      <FontAwesomeIcon icon={faTrashCan} /> Delete
+    </h4>
+  </details>
+</div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
 
                     <label className="LableTask" >Created At:</label>
@@ -248,7 +277,7 @@ function UserManagement() {
                               item.progress < 50
                                 ? "#EC5840"
                                 : item.progress <= 90
-                                  ? "#f1c40f"    // e verdhe
+                                  ? "#f1c40f"    // e verdh
                                   : item.progress == 100
                                     ? "#16b817"
                                     : "#fdfffe"
