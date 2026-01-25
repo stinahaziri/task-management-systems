@@ -1,5 +1,5 @@
 # 1. Image që bën build (përmban SDK-në e .NET)
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
 # 2. Kopjo vetëm file-in e projektit dhe bëj restore
@@ -14,7 +14,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 # 5. Image që do të ekzekutojë aplikacionin (më i vogël dhe më i shpejtë)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
 
 # Kopjo gjithçka që u krijua te folderi 'out' te hapi 4
