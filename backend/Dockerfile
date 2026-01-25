@@ -1,28 +1,23 @@
-# 1. Image që bën build (përmban SDK-në e .NET)
+# 1. Build stage
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
-# 2. Kopjo vetëm file-in e projektit dhe bëj restore
-# Kjo ndihmon që build-i të jetë më i shpejtë
 COPY backend.csproj ./
 RUN dotnet restore
 
-# 3. Kopjo të gjithë pjesën tjetër të kodit (përfshirë Program.cs)
 COPY . ./
-
-# 4. KRIJO DLL-në (Këtu Docker-i e shndërron kodin tënd në .dll)
 RUN dotnet publish -c Release -o out
 
-# 5. Image që do të ekzekutojë aplikacionin (më i vogël dhe më i shpejtë)
+# 2. Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
-
-# Kopjo gjithçka që u krijua te folderi 'out' te hapi 4
 COPY --from=build /app/out .
 
-# Tregoji portin (Render dhe Railway zakonisht duan portin 80 ose 8080)
-EXPOSE 80
-ENV ASPNETCORE_URLS=http://+:80
+# Rregullon problemin e Segmentation Fault (139) dhe Globalization
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-# Kjo është pika e nisjes. Docker do të kërkojë file-in që u krijua nga backend.csproj
+# .NET 9 përdor portin 8080 si default
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+
 ENTRYPOINT ["dotnet", "backend.dll"]
