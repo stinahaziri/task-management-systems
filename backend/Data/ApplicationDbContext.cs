@@ -28,7 +28,6 @@ namespace backend.Data
         public DbSet<User>User{get; set;}
 
         //rolet
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

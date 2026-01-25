@@ -12,7 +12,6 @@ import logo from "./image/Capture-removebg-preview.png";
 function UserManagement() {
   const [tasks, setTasks] = useState<any[]>([]); // State per taska
   const { logout, user } = useContext(UserContext);
-   const [assignedUserIds, setAssignedUserIds] = useState<string[]>([]);
 
 
   // marrim te dhenat nga backend
@@ -77,7 +76,7 @@ function UserManagement() {
           <li>
             {/* <Link to="/logIn" className="singUp">Sign Up Free</Link> */}
   <span style={{ fontSize: '14px', color: '#777' }}>
-       User: <b>{user?.userName}</b>
+       Përdoruesi: <b>{user?.userName}</b>
     </span>
 
         <button 
@@ -103,12 +102,12 @@ function UserManagement() {
       <section className="getDemoo">
         <div className="contanier">
 
-          {/* <div className="user-info">
+          <div className="user-info">
             <h1>Hello</h1>
             <span style={{ fontSize: '14px', color: '#777' }}>
               Përdoruesi: <b>{user?.userName}</b>
             </span>
-          </div> */}
+          </div>
 
           <div className="row">
 
@@ -126,10 +125,11 @@ function UserManagement() {
               {tasks.filter(t => t.progress >= 0 && t.progress < 50).map((item) => (
                 <div className="card" key={item.id}>
 
+                 {/* Gjeje këtë pjesë në kodin tënd */}
 <div className="taskName">
   <h2>{item.title}</h2>
   
-  
+  {/* SHTO KËTË PJESË KËTU: Shfaqja e përdoruesve të caktuar */}
   <div className="assigned-users-list" style={{ display: 'flex', gap: '5px', marginTop: '5px' }}>
     {item.appUsers && item.appUsers.map((u: any) => (
       <div 
@@ -277,7 +277,7 @@ function UserManagement() {
                               item.progress < 50
                                 ? "#EC5840"
                                 : item.progress <= 90
-                                  ? "#f1c40f"    // e verdh
+                                  ? "#f1c40f"    // e verdhe
                                   : item.progress == 100
                                     ? "#16b817"
                                     : "#fdfffe"

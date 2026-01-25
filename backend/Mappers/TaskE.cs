@@ -26,20 +26,23 @@ namespace backend.Mappers
             };
         }
 
-        public static TaskEntity ToTaskEntityDTO(this CreateTaskRequestDto dto)
-        {
-            return new TaskEntity
-            {
-                Title = dto.Title,
-                Status = dto.Status,
-                Priority = dto.Priority,
-                Description=dto.Description,
-                Due_Date = dto.Due_Date,
-                Progress=dto.Progress,
-                Created_By_Id = dto.Created_By_Id,
-                Created_At = DateTime.UtcNow,
-                Updated_At = DateTime.UtcNow
-            };
-        }
+     public static TaskEntity ToTaskEntityDTO(this CreateTaskRequestDto dto)
+{
+    return new TaskEntity
+    {
+        Title = dto.Title,
+        Status = dto.Status,
+        Priority = dto.Priority,
+        Description = dto.Description,
+        Due_Date = dto.Due_Date,
+        Progress = dto.Progress,
+        Created_By_Id = dto.Created_By_Id,
+        Created_At = DateTime.UtcNow,
+        Updated_At = DateTime.UtcNow,
+
+        
+       
+    };
+}
     }
 }
