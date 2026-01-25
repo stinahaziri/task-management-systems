@@ -26,7 +26,7 @@ function SignUp() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignUpFormsInputs>({ resolver: yupResolver(validation) });
+  } = useForm<SignUpFormsInputs>({ resolver: yupResolver(validation) as any });
 
   const handleRegister = (data: SignUpFormsInputs) => {
      const cleanUsername = data.userName.replace(/\s/g, "");

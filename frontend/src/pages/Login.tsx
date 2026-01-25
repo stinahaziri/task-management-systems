@@ -7,24 +7,26 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../Context/useAuth"; 
 
-type LogInFormsInputs = {
-  userName: string;
-  password: string;
-};
+// type LogInFormsInputs = {
+//   userName: string;
+//   password: string;
+// };
 
-const validation = Yup.object().shape({
+const validation = Yup.object({
   userName: Yup.string().required("Username është i detyrueshëm"),
   password: Yup.string().required("Password është i detyrueshëm"),
-});
+}).required();
 
+type LogInFormsInputs = Yup.InferType<typeof validation>;
 function Login() {
   const { loginUser } = useContext(UserContext); 
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LogInFormsInputs>({ resolver: yupResolver(validation) });
+  register,
+  handleSubmit,
+  formState: { errors, isSubmitting },
+}  = useForm<LogInFormsInputs>({ resolver: yupResolver(validation) as any});
+
 
   const handleLogin = (data: LogInFormsInputs) => {
     loginUser(data.userName, data.password);
