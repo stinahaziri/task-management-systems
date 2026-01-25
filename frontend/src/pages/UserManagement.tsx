@@ -125,16 +125,14 @@ function UserManagement() {
               {tasks.filter(t => t.progress >= 0 && t.progress < 50).map((item) => (
                 <div className="card" key={item.id}>
 
-                 {/* Gjeje këtë pjesë në kodin tënd */}
 <div className="taskName">
   <h2>{item.title}</h2>
   
-  {/* SHTO KËTË PJESË KËTU: Shfaqja e përdoruesve të caktuar */}
   <div className="assigned-users-list" style={{ display: 'flex', gap: '5px', marginTop: '5px' }}>
     {item.appUsers && item.appUsers.map((u: any) => (
       <div 
         key={u.id} 
-        title={u.userName} // Kur dërgon mausin mbi rreth, shfaqet emri i plotë
+        title={u.userName} 
         style={{
           width: '25px',
           height: '25px',

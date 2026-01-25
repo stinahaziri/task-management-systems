@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using backend.Interface;
 using backend.Models.Entities;
+using Microsoft.AspNetCore.Identity; // Shto këtë
 using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Service
@@ -15,37 +14,47 @@ namespace backend.Service
     public class TokenService : ITokenService
     {  
         private readonly IConfiguration _config;
-
         private readonly SymmetricSecurityKey _key;
+        private readonly UserManager<AppUser> _userManager; 
 
-          public TokenService(IConfiguration config)//iconfiguration me pull data prej app jesonit sepse qaty i kena shkru kto Issuer....
+        public TokenService(IConfiguration config, UserManager<AppUser> userManager)
         {
-            _config=config;
-            _key=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"]));
+            _config = config;
+            _userManager = userManager; // Inicializo userManager
+            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"]));
         }
-         public string CreateToken(AppUser user)
+
+        public async Task<string> CreateToken(AppUser user)
         {
-            var claims=new List<Claim>
+            var claims = new List<Claim>
             {
                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-               
                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName)
             };
-            var creds=new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
-            var tokenDescriptor=new SecurityTokenDescriptor
+
+            // --- SHTIMI I ROLEVE NË TOKEN ---
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+            // --------------------------------
+
+            var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires=DateTime.Now.AddDays(7),
-                SigningCredentials=creds,
-                Issuer=_config["Jwt:Issuer"],
-                Audience=_config["Jwt:Audience"]
+                Expires = DateTime.Now.AddDays(7),
+                SigningCredentials = creds,
+                Issuer = _config["Jwt:Issuer"],
+                Audience = _config["Jwt:Audience"]
             };
-            var tokenHandler= new JwtSecurityTokenHandler();
-            var token=tokenHandler.CreateToken(tokenDescriptor);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             
             return tokenHandler.WriteToken(token);
-        
-
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using backend.Data;
 using backend.Dtos.TaskEntity.Role;
 using backend.Interface;
+using backend.Migrations;
 using backend.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,13 +42,14 @@ public async Task<IActionResult> LogIn([FromBody] LoginDto loginDto)
          var result = await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password,false);
 
          if(!result.Succeeded) return Unauthorized("Username not found or password");
-         
+          var roles = await _userMenager.GetRolesAsync(user); 
          return Ok(
             new
             {
                 UserName=user.UserName,
                 Email=user.Email,
-                Token=_tokenService.CreateToken(user)
+                Token= await _tokenService.CreateToken(user),
+                   Role = roles.FirstOrDefault() 
             }
          );
         }

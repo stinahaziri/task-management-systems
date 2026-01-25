@@ -32,7 +32,7 @@ function Header() {
         </li>
         
          {/* <li>
-          <NavLink to="/userManagment" className="nav-item">User</NavLink>
+          <NavLink to="/adminManagement" className="nav-item">User</NavLink>
         </li> */}
         <li>
            <NavLink to="/login" className="singUp">Sign Up</NavLink>

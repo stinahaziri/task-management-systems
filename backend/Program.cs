@@ -51,7 +51,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.Password.RequiredUniqueChars=1;
  options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ "; 
 })
-.AddEntityFrameworkStores<ApplicationDbContext>();
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();;
 // #pragma warning disable CS8604 // Possible null reference argument.
 
 //per hyrje,dalje ,indentifikim me perdor JWT ,kerkon nje token
@@ -82,6 +83,44 @@ builder.Services.AddScoped<ITaskE,TaskRepositor>();//ura lidhse me interfacin ed
 builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
+
+// --- SHTO KËTË PJESË KËTU (SEEDING ROLES) ---
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+    // 1. Krijo rolet nëse nuk ekzistojnë
+    string[] roleNames = { "Admin", "User" };
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+
+    
+    var adminEmail = "admin@test.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+    if (adminUser == null)
+    {
+        var newAdmin = new AppUser { 
+            UserName = "admin", 
+            Email = adminEmail,
+            
+        };
+        
+        var createAdmin = await userManager.CreateAsync(newAdmin, "Admin123!");
+        if (createAdmin.Succeeded)
+        {
+            await userManager.AddToRoleAsync(newAdmin, "Admin");
+        }
+    }
+}
+
+// ... vazhdon kodi tjetër
 //zbatimi i swegger
 app.UseSwagger();
 app.UseSwaggerUI();

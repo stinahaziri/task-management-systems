@@ -35,25 +35,36 @@ export const UserProvider = ({ children }: Props) => {
   }, []);
 
   // Funksioni per Login
-  const loginUser = async (username: string, password: string) => {
-    try {
-      const res = await loginApi(username, password);
-      if (res && res.data) {
-        localStorage.setItem("token", res.data.token);
-        const userObj = {
-          userName: res.data.userName,
-          email: res.data.email,
-        };
-        localStorage.setItem("user", JSON.stringify(userObj));
-        setToken(res.data.token);
-        setUser(userObj);
-        toast.success("Mirësevini!");
-        navigate("/userManagment");
+ const loginUser = async (username: string, password: string) => {
+  try {
+    const res = await loginApi(username, password);
+    if (res && res.data) {
+      localStorage.setItem("token", res.data.token);
+      
+      const userObj = {
+        userName: res.data.userName,
+        email: res.data.email,
+        role: res.data.role 
+      };
+      
+      localStorage.setItem("user", JSON.stringify(userObj));
+      setToken(res.data.token);
+      setUser(userObj);
+      toast.success("Mirësevini!");
+
+      // --- LOGJIKA E RE E NAVIGIMIT ---
+      if (res.data.role === "Admin") {
+        navigate("/adminManagement"); 
+      } else {
+        navigate("/userManagment"); 
       }
-    } catch (e) {
-      toast.warning("Gabim gjatë kyçjes");
+      // --------------------------------
+      
     }
-  };
+  } catch (e) {
+    toast.warning("Gabim gjatë kyçjes");
+  }
+};
 
   // Funksioni per Regjistrim
   const registerUser = async (email: string, username: string, password: string) => {
@@ -64,6 +75,7 @@ export const UserProvider = ({ children }: Props) => {
         const userObj = {
           userName: res.data.userName,
           email: res.data.email,
+           role:res.data.role
         };
         localStorage.setItem("user", JSON.stringify(userObj));
         setToken(res.data.token);

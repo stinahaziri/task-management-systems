@@ -14,6 +14,7 @@ import Pricing from "./pages/pricing";
 import Contact from "./pages/contact";
 import Login from "./pages/Login";
 import SignIn from './pages/SignIn';
+import AdminManagement  from "./pages/AdminManagement"
 
 import { UserProvider } from './Context/useAuth'; 
 import AuthService from './Services/AuthService';
@@ -24,7 +25,7 @@ function AppRoutes() {
       <Routes>
         {/* Main Pages */}
         <Route path="/" element={<Index />} />
-        <Route path="/userManagment" element={<UserManagement />} />
+       
         <Route path="/about" element={<About />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} /> 
@@ -39,6 +40,10 @@ function AppRoutes() {
 
        
         <Route path="/authService" element={<AuthService />} />
+
+{/* rolet */}
+ <Route path="/userManagment" element={<UserManagement />} />
+         <Route path="/adminManagement" element={<AdminManagement />} />
       </Routes>
 
       <ToastContainer />
