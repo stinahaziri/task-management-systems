@@ -18,7 +18,11 @@ builder.WebHost.UseUrls($"http://localhost:{port}");
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+    });
 //swegger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

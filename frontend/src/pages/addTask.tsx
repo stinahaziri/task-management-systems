@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "./header";
 import "./styles/signUpStyle.css";
+import { UserContext } from "../Context/useAuth";
 
 function AddTask() {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

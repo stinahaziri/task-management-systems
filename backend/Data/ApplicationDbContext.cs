@@ -46,6 +46,13 @@ namespace backend.Data
                 }
             };
             builder.Entity<IdentityRole>().HasData(roles);
+            
+            // Configure TaskAssignments -> AppUser relationship
+            builder.Entity<TaskAssignments>()
+                .HasOne(ta => ta.AppUser)
+                .WithMany()
+                .HasForeignKey(ta => ta.User_Id)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         

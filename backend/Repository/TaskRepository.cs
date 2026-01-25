@@ -53,7 +53,10 @@ namespace backend.Repository
 
         public async Task<List<TaskEntity>>GetListAsync()
         {
-            return await _context.TaskEntity.ToListAsync();
+            return await _context.TaskEntity
+                .Include(t => t.TaskAssignments)
+                    .ThenInclude(ta => ta.AppUser)
+                .ToListAsync();
         }
 
         public async Task<TaskEntity?> UpdateAsync(int id, UptadeTaskRequestDto taskDto)

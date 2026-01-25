@@ -24,6 +24,14 @@ namespace backend.Dtos.TaskEntity
 
         public DateTime Created_At { get; set; }=DateTime.Now;
         public DateTime Updated_At { get; set; }
+        
+        public List<AppUserDto>? AppUsers { get; set; }
 
+    }
+    
+    public class AppUserDto
+    {
+        public string Id { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
     }
 }

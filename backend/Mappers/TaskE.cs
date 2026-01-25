@@ -11,6 +11,16 @@ namespace backend.Mappers
     {
         public static TaskEntityDto ToTaskEntityDto(this TaskEntity TaskEntityModel)
         {
+            var appUsers = TaskEntityModel.TaskAssignments?
+                .Where(ta => ta.AppUser != null)
+                .Select(ta => new AppUserDto
+                {
+                    Id = ta.AppUser!.Id,
+                    UserName = ta.AppUser.UserName ?? string.Empty
+                })
+                .Distinct()
+                .ToList();
+                
             return new TaskEntityDto
             {
                 ID=TaskEntityModel.ID,
@@ -23,6 +33,7 @@ namespace backend.Mappers
                 Progress=TaskEntityModel.Progress,
                 Created_At=TaskEntityModel.Created_At,
                 Updated_At=TaskEntityModel.Updated_At,
+                AppUsers = appUsers
             };
         }
 

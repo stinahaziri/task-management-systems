@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import './styles/getDemoStyle.css';
 import axios from "axios";
 import Header from "./header";
@@ -12,8 +12,8 @@ import logo from "./image/Capture-removebg-preview.png";
 function UserManagement() {
   const [tasks, setTasks] = useState<any[]>([]); // State per taska
   const { logout, user } = useContext(UserContext);
-   const [assignedUserIds, setAssignedUserIds] = useState<string[]>([]);
-
+  const [assignedUserIds, setAssignedUserIds] = useState<string[]>([]);
+  const location = useLocation();
 
   // marrim te dhenat nga backend
   useEffect(() => {
@@ -28,7 +28,7 @@ function UserManagement() {
       }
     };
     fetchTasks();
-  }, []);
+  }, [location.pathname]); // Refresh when navigating to this page
 
   //delete
   const handleDelete = async (id: number) => {
@@ -103,12 +103,22 @@ function UserManagement() {
       <section className="getDemoo">
         <div className="contanier">
 
-          {/* <div className="user-info">
-            <h1>Hello</h1>
-            <span style={{ fontSize: '14px', color: '#777' }}>
-              Përdoruesi: <b>{user?.userName}</b>
-            </span>
-          </div> */}
+          {/* Welcome message for logged-in users */}
+          <div className="user-info" style={{
+            marginBottom: '20px',
+            padding: '15px 20px',
+            backgroundColor: '#f8f9fa',
+            borderRadius: '8px',
+            border: '1px solid #e0e0e0'
+          }}>
+            <h2 style={{ margin: '0 0 10px 0', color: '#333' }}>
+              Welcome, <span style={{ color: '#007bff' }}>{user?.userName}</span>!
+            </h2>
+            <p style={{ margin: '0', color: '#666', fontSize: '14px' }}>
+              You can add new tasks by clicking the <FontAwesomeIcon icon={faPlus} style={{ color: '#007bff' }} /> button in the Tasks column, 
+              or <Link to="/addTask" style={{ color: '#007bff', textDecoration: 'underline', fontWeight: 'bold' }}>click here to add a task</Link>.
+            </p>
+          </div>
 
           <div className="row">
 
@@ -117,8 +127,29 @@ function UserManagement() {
 
               <div className="headerOne">
                 <h1>Tasks</h1>
-                <Link to="/addTask">
+                <Link 
+                  to="/addTask" 
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    textDecoration: 'none',
+                    color: '#007bff',
+                    fontWeight: 'bold',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e7f3ff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }}
+                  title="Add New Task"
+                >
                   <FontAwesomeIcon icon={faPlus} className="plusIcon" />
+                  <span style={{ fontSize: '14px' }}>Add Task</span>
                 </Link>
 
               </div>

@@ -45,6 +45,7 @@ public async Task<IActionResult> LogIn([FromBody] LoginDto loginDto)
          return Ok(
             new
             {
+                Id = user.Id,
                 UserName=user.UserName,
                 Email=user.Email,
                 Token=_tokenService.CreateToken(user)

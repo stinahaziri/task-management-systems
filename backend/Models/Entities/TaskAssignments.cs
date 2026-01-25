@@ -11,14 +11,14 @@ namespace backend.Models.Entities
   public int Id { get; set; }
 
         public int Task_Id { get; set; }
-        public int User_Id { get; set; }
+        public string User_Id { get; set; } = string.Empty; // Changed to string to match AppUser.Id
 
         public DateTime Assigned_At { get; set; }=DateTime.Now;
-        public int Assigned_By { get; set; }
+        public string Assigned_By { get; set; } = string.Empty; // Changed to string to match AppUser.Id
 
         // Navigation properties
         public TaskEntity? TaskEntity { get; set; }
-        // public UserEntity User { get; set; }
+        public AppUser? AppUser { get; set; }
     
 
 

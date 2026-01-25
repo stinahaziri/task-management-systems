@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace backend.Dtos.TaskEntity
 {
@@ -11,6 +12,7 @@ namespace backend.Dtos.TaskEntity
         public int Progress{ get ; set;  }
         
         public DateTime Due_Date { get; set; } = DateTime.Now;
-        public int Created_By_Id { get; set; }
+        public int Created_By_Id { get; set; } = 0; // Default to 0 if not provided
+        public List<string>? AssignedUserIds { get; set; }
     }
 }
