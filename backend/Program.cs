@@ -36,11 +36,16 @@ builder.Services.AddCors(options =>
 
 //konfigurimi i dbContekstit
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{//qyty jon opsionet qfar databaze don me perdor
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+// builder.Services.AddDbContext<ApplicationDbContext>(options =>
+// {//qyty jon opsionet qfar databaze don me perdor
+// // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     
-});
+// });
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite("Data Source=taskm.db")); 
+
+
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit=true;
@@ -87,6 +92,9 @@ var app = builder.Build();
 // --- SHTO KËTË PJESË KËTU (SEEDING ROLES) ---
 using (var scope = app.Services.CreateScope())
 {
+      var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.EnsureCreated();
+    
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
