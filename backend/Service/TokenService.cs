@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using backend.Interface;
 using backend.Models.Entities;
-using Microsoft.AspNetCore.Identity; // Shto këtë
+using Microsoft.AspNetCore.Identity; 
 using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Service
@@ -32,7 +32,7 @@ namespace backend.Service
                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName)
             };
 
-            // --- SHTIMI I ROLEVE NË TOKEN ---
+            // --- shtini i rolev ne token ---
             var roles = await _userManager.GetRolesAsync(user);
             foreach (var role in roles)
             {

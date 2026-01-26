@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserProfile } from "../Models/User";
 import { loginApi, regitserApi } from "../Services/AuthService"; // Importohet nga fili që dërgove
+import { handleError } from "../ErrorHandler";
 
 type UserContextType = {
   user: UserProfile | null;
@@ -50,7 +51,7 @@ export const UserProvider = ({ children }: Props) => {
       localStorage.setItem("user", JSON.stringify(userObj));
       setToken(res.data.token);
       setUser(userObj);
-      toast.success("Mirësevini!");
+      toast.success("Welcome aboard!");
 
       // --- LOGJIKA E RE E NAVIGIMIT ---
       if (res.data.role === "Admin") {
@@ -80,11 +81,14 @@ export const UserProvider = ({ children }: Props) => {
         localStorage.setItem("user", JSON.stringify(userObj));
         setToken(res.data.token);
         setUser(userObj);
-        toast.success("Regjistrimi u krye!");
+        toast.success("Registration successful!");
         navigate("/login");
+         return { success: true };
       }
     } catch (e) {
-      toast.warning("Gabim gjatë regjistrimit");
+      // toast.warning("Error during registration");
+        handleError(e); 
+    throw e;  
     }
   };
 

@@ -100,14 +100,14 @@ public async Task<IActionResult> GetAllUsers()
                     
                 else
                 {
-                    return StatusCode(500,roleResult.Errors);
+                    return BadRequest(roleResult.Errors);
                 }
 
                 }
                 
                 else
                 {
-                    return StatusCode(500,createUse.Errors);
+                   return BadRequest(createUse.Errors);
                 }
 
 

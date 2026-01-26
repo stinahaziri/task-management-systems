@@ -27,7 +27,7 @@ import {toast} from"react-toastify"
       } 
       // nese perdorusi so i autorizum - Statusi 401
       else if (err?.status === 401) {
-        toast.warning("Ju lutem kyçuni (Please login)");
+        toast.warning("Please log in");
         window.history.pushState({}, "LoginPage", "/login");
       } 
       //gabimet e tjera

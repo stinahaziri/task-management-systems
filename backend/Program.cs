@@ -86,7 +86,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 
-// --- SHTO KËTË PJESË KËTU (SEEDING ROLES) ---
+
 using (var scope = app.Services.CreateScope())
 {
 

@@ -7,6 +7,6 @@ using backend.Models.Entities;
 namespace backend.Interface
 {
     public interface ITokenService
-    { Task<string> CreateToken(AppUser user); // Nga string në Task<string>
+    { Task<string> CreateToken(AppUser user); 
     }
 }

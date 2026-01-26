@@ -13,8 +13,8 @@ import { UserContext } from "../Context/useAuth";
 // };
 
 const validation = Yup.object({
-  userName: Yup.string().required("Username është i detyrueshëm"),
-  password: Yup.string().required("Password është i detyrueshëm"),
+  userName: Yup.string().required("Username is required"),
+  password: Yup.string().required("Password is required"),
 }).required();
 
 type LogInFormsInputs = Yup.InferType<typeof validation>;
@@ -38,7 +38,7 @@ function Login() {
       <section className="looginSection">
         <div className="colummLogin">
           <h1 className="tittle">Log In</h1>
-          <p className="subTittle">Mirësevini! Ju lutem shënoni të dhënat tuaja.</p>
+          <p className="subTittle">Welcome! Please enter your details.</p>
 
           <form onSubmit={handleSubmit(handleLogin)}>
             <div className="firstInputt">
@@ -64,11 +64,11 @@ function Login() {
             </div>
 
             <button className="ButonAdd" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Duke u kyçur..." : "Hyni"}
+              {isSubmitting ? "Logging in…" : "Log in"}
             </button>
 
             <div className="formFooter">
-              <p>Nuk keni llogari? <Link to="/signIn">Regjistrohuni</Link></p>
+              <p>Don’t have an account? <Link to="/signIn">Sign up</Link></p>
             </div>
           </form>
         </div>

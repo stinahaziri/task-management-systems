@@ -14,9 +14,12 @@ type SignUpFormsInputs = {
 };
 
 const validation = Yup.object().shape({
-  userName: Yup.string().required("Username është i detyrueshëm"),
-  email: Yup.string().email("Email jo-valid").required("Email është i detyrueshëm"),
-  password: Yup.string().min(8, "Së paku 8 karaktere").required("Password është i detyrueshëm"),
+  userName: Yup.string().required("Username is required"),
+  email: Yup.string().email("Invalid email address").required("Email is required"),
+  password: Yup.string().min(8, "At least 8 characters").matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character")
+    .required("Password is required"),
 });
 
 function SignUp() {
@@ -25,13 +28,31 @@ function SignUp() {
   const {
     register,
     handleSubmit,
+    setError, 
     formState: { errors, isSubmitting },
-  } = useForm<SignUpFormsInputs>({ resolver: yupResolver(validation) as any });
+  } = useForm<SignUpFormsInputs>({ 
+    resolver: yupResolver(validation) as any,
+    mode: "onTouched" 
+  });
 
-  const handleRegister = (data: SignUpFormsInputs) => {
-     const cleanUsername = data.userName.replace(/\s/g, "");
-    registerUser(data.email, data.userName, data.password);
+  
+  const handleRegister = async (data: SignUpFormsInputs) => {
+    try {
+
+      const cleanUsername = data.userName.replace(/\s/g, "");
+      
+      
+      await registerUser(data.email, cleanUsername, data.password);
+      
+    } catch (error: any) {
+   
+      setError("userName", {
+        type: "manual",
+        message: "This username is already taken",
+      });
+    }
   };
+
 
   return (
     <>
@@ -39,7 +60,7 @@ function SignUp() {
       <section className="signInMainn">
         <div className="columSign">
           <h1 className="tittle">Sign Up</h1>
-          <p className="descriptionText">Krijoni llogarinë tuaj.</p>
+          <p className="descriptionText">Create your account.</p>
 
           <form className="forma" onSubmit={handleSubmit(handleRegister)}>
             <div className="inputGroupSignn">
@@ -59,12 +80,12 @@ function SignUp() {
 
             <div className="butoniS">
               <button className="ButonAdd" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Duke u regjistruar..." : "Krijo Llogarinë"}
+                {isSubmitting ? "Registering..." : "Sign up"}
               </button>
             </div>
 
             <div className="footerLink">
-              <p>Keni llogari? <Link to="/login">Kyçuni këtu</Link></p>
+              <p>Already have an account? <Link to="/login">Log in here</Link></p>
             </div>
           </form>
         </div>

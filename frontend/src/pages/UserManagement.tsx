@@ -31,12 +31,12 @@ function UserManagement() {
 
   //delete
   const handleDelete = async (id: number) => {
-    if (window.confirm("A jeni i sigurt që deshironi ta fshini kete task?")) {
+    if (window.confirm("Are you sure you want to delete this task?")) {
       try {
         await axios.delete(`http://localhost:5165/backend/TaskEntity/${id}`);
         setTasks(tasks.filter(t => t.id !== id)); // largohet prej ekranit 
       } catch (error) {
-        console.error("Gabim gjate fshirjes:", error);
+        console.error("Error occurred while deleting:", error);
       }
     }
   };
@@ -76,7 +76,7 @@ function UserManagement() {
           <li>
             {/* <Link to="/logIn" className="singUp">Sign Up Free</Link> */}
   <span style={{ fontSize: '14px', color: '#777' }}>
-       Përdoruesi: <b>{user?.userName}</b>
+       User: <b>{user?.userName}</b>
     </span>
 
         <button 
@@ -128,6 +128,8 @@ function UserManagement() {
 <div className="taskName">
   <h2>{item.title}</h2>
   
+  
+        {/* sen hiq */}
   <div className="assigned-users-list" style={{ display: 'flex', gap: '5px', marginTop: '5px' }}>
     {item.appUsers && item.appUsers.map((u: any) => (
       <div 
@@ -147,7 +149,6 @@ function UserManagement() {
           border: '1px solid white'
         }}
       >
-        {/* Shfaqim 2 shkronjat e para të emrit */}
         {u.userName.substring(0, 2).toUpperCase()}
       </div>
     ))}
