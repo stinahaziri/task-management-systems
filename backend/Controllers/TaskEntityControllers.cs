@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Dtos.TaskEntity;
 using Microsoft.EntityFrameworkCore;
 using backend.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace backend.Controllers 
 {
-    [Route("backend/TaskEntity")]//rruga e Api si url psh
+    [Route("api/v1/tasks")] //rruga e Api si url psh //versionimi
+
     [ApiController]//per mu sjell si Api
+   
     public class TaskEntityControllers : ControllerBase//  me u sjell si kontroll me dit
     {
         private readonly ApplicationDbContext _context;//veq e bon mutable nuk i lejon njerzit me modifiku diqka qe sbon 
@@ -80,19 +83,28 @@ namespace backend.Controllers
 
         }
 
-        [HttpDelete]
-        [Route("{id}")]
+        // [HttpDelete]
+        // [Route("{id}")]
 
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            var taskModal = await _taskRepo.DeleteAsync(id);
-            if (taskModal == null)
-            {
-                return NotFound();
-            }
+        // public async Task<IActionResult> Delete([FromRoute] int id)
+        // {
+        //     var taskModal = await _taskRepo.DeleteAsync(id);
+        //     if (taskModal == null)
+        //     {
+        //         return NotFound();
+        //     }
            
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
+
+        [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")] //  RBAC
+    public async Task<IActionResult> Delete(int id) 
+    {
+        var deleted = await _taskRepo.DeleteAsync(id);
+        if (deleted == null) return NotFound();
+        return NoContent();
+    }
 
 
 

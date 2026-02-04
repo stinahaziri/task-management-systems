@@ -10,7 +10,7 @@ import {
 import logo from "./image/Capture-removebg-preview.png";
 
 function AdminManagement() {
-  const { logout, user } = useContext(UserContext);
+  const { logout, user , token} = useContext(UserContext);
   const navigate = useNavigate();
 
   const [users, setUsers] = useState<any[]>([]);
@@ -30,7 +30,7 @@ function AdminManagement() {
   }, [user, navigate]);
 
   const axiosConfig = {
-    headers: { Authorization: `Bearer ${(user as any)?.token}` }
+    headers: { Authorization: `Bearer ${token}` }
   };
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function AdminManagement() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(`http://localhost:5165/backend/Account/users?pageNumber=${currentPage}&pageSize=${pageSize}`,);
+      const res = await axios.get(`http://localhost:5165/backend/Account/users?pageNumber=${currentPage}&pageSize=${pageSize}`, axiosConfig);
       setUsers(res.data.items || res.data);
       setTotalPages(res.data.totalPages || 1);
     } catch (e) { console.error(e); }
@@ -50,7 +50,7 @@ function AdminManagement() {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("http://localhost:5165/backend/TaskEntity", axiosConfig);
+      const res = await axios.get("http://localhost:5165/api/v1/tasks");
       setTasks(res.data);
     } catch (e) { console.error(e); }
   };
@@ -58,7 +58,7 @@ function AdminManagement() {
   const handleDeleteTask = async (id: number) => {
     if (window.confirm("A jeni i sigurt?")) {
       try {
-        await axios.delete(`http://localhost:5165/backend/TaskEntity/${id}`, axiosConfig);
+        await axios.delete(`http://localhost:5165/api/v1/tasks/${id}`, axiosConfig);
         setTasks(tasks.filter(t => t.id !== id));
       } catch (e) { alert("Gabim gjatë fshirjes"); }
     }

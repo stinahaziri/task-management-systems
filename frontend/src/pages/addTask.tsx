@@ -109,7 +109,7 @@ function AddTask() {
               </div>
             </div>
 
-            <div className="seconInput">
+            {/* <div className="seconInput">
               <div className="inputGroup">
                 <label>Shto Përdoruesit:</label>
                 <select 
@@ -124,7 +124,7 @@ function AddTask() {
                   ))}
                 </select>
               </div>
-            </div>
+            </div> */}
 
             <button className="ButonAdd" type="submit">Save Task</button>
           </form>

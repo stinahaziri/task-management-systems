@@ -19,7 +19,7 @@ function UserManagement() {
     const fetchTasks = async () => {
       try {
 
-        const response = await axios.get("http://localhost:5165/backend/TaskEntity");
+        const response = await axios.get("http://localhost:5165/api/v1/tasks");
         console.log("Te dhenat nga API:", response.data);
         setTasks(response.data);
       } catch (error) {
@@ -33,7 +33,7 @@ function UserManagement() {
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       try {
-        await axios.delete(`http://localhost:5165/backend/TaskEntity/${id}`);
+        await axios.delete(`http://localhost:5165/api/v1/tasks/${id}`);
         setTasks(tasks.filter(t => t.id !== id)); // largohet prej ekranit 
       } catch (error) {
         console.error("Error occurred while deleting:", error);

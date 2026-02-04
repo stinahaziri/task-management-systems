@@ -20,7 +20,7 @@ function InfoTask() {
   useEffect(() => {
     const fetchSingleID = async () => {
       try {
-        const response = await axios.get(`http://localhost:5165/backend/TaskEntity/${id}`);
+        const response = await axios.get(`http://localhost:5165/api/v1/tasks/${id}`);
         setInfoTask(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
