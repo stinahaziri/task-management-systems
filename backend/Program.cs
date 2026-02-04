@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using backend.Service;
 
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.OpenApi.Models;
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 var builder = WebApplication.CreateBuilder(args);
 
 var port = 5165;
@@ -18,10 +21,37 @@ builder.WebHost.UseUrls($"http://localhost:{port}");
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// Versionimi dhe Kontrolluesit
 builder.Services.AddControllers();
+
+
 //swegger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(option =>
+{
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Task Management API", Version = "v1" });
+    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Ju lutem jepni Token-in: Bearer {token}",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference { Type=ReferenceType.SecurityScheme, Id="Bearer" }
+            },
+            new string[]{}
+        }
+    });
+});
+
+//Caching
+builder.Services.AddMemoryCache();
 
 // CORS configuration
 builder.Services.AddCors(options =>
@@ -43,6 +73,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 
+//  Identity & Roles
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit=true;
@@ -76,24 +107,28 @@ options.TokenValidationParameters=new TokenValidationParameters
  ValidAudience=builder.Configuration["JWT:Audience"],
  IssuerSigningKey = new SymmetricSecurityKey(
     System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
- )
+ ),
+   RoleClaimType = "role", 
+        NameClaimType = "given_name",
+        ClockSkew = TimeSpan.Zero
 
 });
 // #pragma warning restore CS8604 // Possible null reference argument.
 
+//di services
 builder.Services.AddScoped<ITaskE,TaskRepositor>();//ura lidhse me interfacin edhe klasen e cila e implementon ata
 builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 
-
+//  Seeding Roles (Admin/User)
 using (var scope = app.Services.CreateScope())
 {
 
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
-    // 1. Krijo rolet nëse nuk ekzistojnë
+    // 1. krijo rolet nese nuk egziston 
     string[] roleNames = { "Admin", "User" };
     foreach (var roleName in roleNames)
     {
@@ -123,22 +158,39 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// ... vazhdon kodi tjetër
-//zbatimi i swegger
-app.UseSwagger();
-app.UseSwaggerUI();
 
-// Configure the HTTP request pipeline.
+app.UseSwagger();
+app.UseSwaggerUI(c => {
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Task API v1");
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-// Use CORS before MapControllers
+// CORS
 app.UseCors("AllowReact");
+
+
+// app.UseHttpsRedirection(); 
+
+
 app.UseAuthentication();
-app.UseAuthentication();
-// app.UseHttpsRedirection()
+
+app.UseAuthorization(); 
 
 app.MapControllers();
+
 app.Run();
+
+
+
+
+
+
+
+
+
+
+
