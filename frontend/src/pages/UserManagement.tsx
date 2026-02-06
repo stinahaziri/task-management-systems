@@ -5,13 +5,13 @@ import axios from "axios";
 import Header from "./header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext } from "react";
-import { faPlus, faCircleCheck, faGear, faMagnifyingGlass, faEllipsisVertical, faTrashCan, faCircleXmark, faPaperclip, faMessage } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faCircleCheck, faGear, faMagnifyingGlass, faEllipsisVertical, faTrashCan, faCircleXmark, faPenToSquare, faMessage } from '@fortawesome/free-solid-svg-icons'
 import { UserContext } from "../Context/useAuth";
 
 import logo from "./image/Capture-removebg-preview.png";
 function UserManagement() {
   const [tasks, setTasks] = useState<any[]>([]); // State per taska
-  const { logout, user } = useContext(UserContext);
+  const { logout, user,token } = useContext(UserContext);
 
 
   // marrim te dhenat nga backend
@@ -29,17 +29,43 @@ function UserManagement() {
     fetchTasks();
   }, []);
 
-  //delete
-  const handleDelete = async (id: number) => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
-      try {
-        await axios.delete(`http://localhost:5165/api/v1/tasks/${id}`);
-        setTasks(tasks.filter(t => t.id !== id)); // largohet prej ekranit 
-      } catch (error) {
-        console.error("Error occurred while deleting:", error);
-      }
+  //edit
+  const handleEdit = async (task: any) => {
+    
+    const newTitle = prompt("New tittle:", task.title) || task.title;
+    const newDescription = prompt("New decription:", task.description) || task.description;
+    const newProgress = prompt("Progresi (0-100):", task.progress) || task.progress;
+
+    try {
+      
+      const updateData = {
+        title: newTitle,
+        description: newDescription,
+        status: task.status || "Active", 
+        priority: task.priority || 1,
+        progress: parseInt(newProgress),
+        due_Date: task.due_Date, 
+        created_By_Id: task.created_By_Id || 1 
+      };
+
+      const response = await axios.put(
+        `http://localhost:5165/api/v1/tasks/${task.id}`, 
+        updateData,
+        {
+             headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      
+      setTasks(tasks.map(t => t.id === task.id ? response.data : t));
+      alert("U përditësua me sukses!");
+
+    } catch (error) {
+      console.error("Gabim gjatë PUT:", error);
+      alert("Gabim: Sigurohu që të gjitha fushat janë plotësuar saktë.");
     }
   };
+  
 
 
 
@@ -156,11 +182,11 @@ function UserManagement() {
 
   <hr />
   <details>
-    <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
-    <h4 onClick={() => handleDelete(item.id)} style={{ color: 'red', cursor: 'pointer' }}>
-      <FontAwesomeIcon icon={faTrashCan} /> Delete
-    </h4>
-  </details>
+  <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
+  <h4 onClick={() => handleEdit(item)} style={{ color: '#3498db', cursor: 'pointer' }}>
+    <FontAwesomeIcon icon={faPenToSquare} /> Edit Task
+  </h4>
+</details>
 </div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
 
@@ -209,9 +235,12 @@ function UserManagement() {
                 <div className="cardtwo" key={item.id}>
                   <div className="taskName">
                     <h2>{item.title}</h2>
-                    <details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
-                      <h4 onClick={() => handleDelete(item.id)}><FontAwesomeIcon icon={faTrashCan} /> Delete</h4>
-                    </details>
+                   <details>
+  <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
+  <h4 onClick={() => handleEdit(item)} style={{ color: '#3498db', cursor: 'pointer' }}>
+    <FontAwesomeIcon icon={faPenToSquare} /> Edit Task
+  </h4>
+</details>
                   </div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
 

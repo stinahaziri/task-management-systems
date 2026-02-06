@@ -43,11 +43,11 @@ export const UserProvider = ({ children }: Props) => {
       localStorage.setItem("token", res.data.token);
       
       const userObj = {
-        userName: res.data.userName,
-        email: res.data.email,
-        role: res.data.role 
+        userName: res.data.userName || res.data.UserName,
+        email: res.data.email || res.data.Email,
+        role: res.data.role || res.data.Role 
       };
-      
+       console.log("User Object i krijuar:", userObj)
       localStorage.setItem("user", JSON.stringify(userObj));
       setToken(res.data.token);
       setUser(userObj);

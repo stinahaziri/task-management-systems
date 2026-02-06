@@ -41,7 +41,7 @@ namespace backend.Data
                 new IdentityRole
                 {
                     Name="User",
-                    NormalizedName ="User"
+                    NormalizedName ="USER"
                 }
             };
             builder.Entity<IdentityRole>().HasData(roles);

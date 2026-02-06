@@ -23,7 +23,7 @@ builder.Services.AddOpenApi();
 
 // Versionimi dhe Kontrolluesit
 builder.Services.AddControllers();
-
+ 
 
 //swegger
 builder.Services.AddEndpointsApiExplorer();

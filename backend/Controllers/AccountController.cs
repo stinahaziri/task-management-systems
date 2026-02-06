@@ -90,9 +90,10 @@ public async Task<IActionResult> GetAllUsers()
                     return Ok(new
                     {
                         
-                            UserName=appUser.UserName,
-                            Email=appUser.Email,
-                            Token = _tokenService.CreateToken(appUser)
+                            userName=appUser.UserName,
+                            email=appUser.Email,
+                            token = await _tokenService.CreateToken(appUser),
+                            role = "User"
                     }
                         
                     );   
