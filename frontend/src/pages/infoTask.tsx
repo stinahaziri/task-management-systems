@@ -48,7 +48,7 @@ function InfoTask() {
 
     try {
       await axios.put(
-        `http://localhost:5165/backend/TaskEntity/${id}`,
+        `http://localhost:5165/api/v1/tasks/${id}`,
         {
           ...infoTaskk,
           Progress: newProgress

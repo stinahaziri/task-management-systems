@@ -13,7 +13,7 @@ namespace backend.Controllers
 {
     [Route("api/v1/tasks")] //rruga e Api si url psh //versionimi
 
-    [ApiController]//per mu sjell si Api
+    // [ApiController]//per mu sjell si Api
    
     public class TaskEntityControllers : ControllerBase//  me u sjell si kontroll me dit
     {
@@ -98,7 +98,7 @@ namespace backend.Controllers
         // }
 
         [HttpDelete("{id}")]
-    [Authorize(Roles = "Admin")] //  RBAC
+    // [Authorize(Roles = "Admin")] //  RBAC
     public async Task<IActionResult> Delete(int id) 
     {
         var deleted = await _taskRepo.DeleteAsync(id);

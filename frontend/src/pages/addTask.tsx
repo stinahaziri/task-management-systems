@@ -56,7 +56,7 @@ function AddTask() {
     };
 
     try {
-      await axios.post("http://localhost:5165/backend/TaskEntity", dataToSend);
+      await axios.post("http://localhost:5165/api/v1/tasks", dataToSend);
       navigate("/userManagment");
     } catch (error) {
       alert("Gabim gjatë ruajtjes!");

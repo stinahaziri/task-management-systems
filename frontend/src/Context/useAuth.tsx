@@ -53,7 +53,7 @@ export const UserProvider = ({ children }: Props) => {
       setUser(userObj);
       toast.success("Welcome aboard!");
 
-      // --- LOGJIKA E RE E NAVIGIMIT ---
+    
       if (res.data.role === "Admin") {
         navigate("/adminManagement"); 
       } else {
