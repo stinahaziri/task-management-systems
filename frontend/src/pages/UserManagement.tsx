@@ -10,24 +10,67 @@ import { UserContext } from "../Context/useAuth";
 
 import logo from "./image/Capture-removebg-preview.png";
 function UserManagement() {
-  const [tasks, setTasks] = useState<any[]>([]); // State per taska
-  const { logout, user,token } = useContext(UserContext);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [allUsers, setAllUsers] = useState<any[]>([]);
+  const { logout, user, token } = useContext(UserContext);
 
+  // modal state
+  const [assignModal, setAssignModal] = useState<{ task: any } | null>(null);
+  const [assignUserId, setAssignUserId] = useState("");
+  const [assignMsg, setAssignMsg] = useState<{ text: string; ok: boolean } | null>(null);
 
-  // marrim te dhenat nga backend
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get("http://localhost:5165/api/v1/tasks");
+      setTasks(response.data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-
-        const response = await axios.get("http://localhost:5165/api/v1/tasks");
-        console.log("Te dhenat nga API:", response.data);
-        setTasks(response.data);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
     fetchTasks();
+    // merr të gjithë users për dropdown
+    axios.get("http://localhost:5165/backend/Account/users")
+      .then(r => setAllUsers(r.data))
+      .catch(e => console.error(e));
   }, []);
+
+  const openAssignModal = (task: any) => {
+    setAssignModal({ task });
+    setAssignUserId("");
+    setAssignMsg(null);
+  };
+
+  const handleAssign = async () => {
+    if (!assignUserId || !assignModal) {
+      setAssignMsg({ text: "Zgjidhni një përdorues!", ok: false });
+      return;
+    }
+    try {
+      const res = await axios.post("http://localhost:5165/backend/Admin/AssignUserTask", {
+        userId: assignUserId,
+        taskId: assignModal.task.id,
+      }, { headers: { Authorization: `Bearer ${token}` } });
+      setAssignMsg({ text: res.data.message, ok: true });
+      fetchTasks(); // rifresko kartat
+    } catch (e: any) {
+      const msg = e?.response?.data;
+      setAssignMsg({ text: typeof msg === "string" ? msg : "Gabim gjatë caktimit.", ok: false });
+    }
+  };
+
+  const handleRemoveAssignment = async (taskId: number, userId: string) => {
+    try {
+      // gjej assignmentId
+      const task = tasks.find(t => t.id === taskId);
+      const asgn = task?.taskAssignments?.find((a: any) => a.user_Id === userId);
+      if (!asgn) return;
+      await axios.delete(`http://localhost:5165/backend/Admin/RemoveAssignment/${asgn.id}`,
+        { headers: { Authorization: `Bearer ${token}` } });
+      fetchTasks();
+    } catch (e) { console.error(e); }
+  };
 
   //edit
   const handleEdit = async (task: any) => {
@@ -70,8 +113,102 @@ function UserManagement() {
 
 
 
+  // avatars e userave të caktuar + butoni "+"
+  const AssignedAvatars = ({ item }: { item: any }) => {
+    const assigned: any[] = item.taskAssignments || [];
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px', flexWrap: 'wrap' }}>
+        {assigned.map((a: any) => {
+          const name = a.appUser?.userName || '?';
+          const initials = name.substring(0, 2).toUpperCase();
+          return (
+            <div key={a.id} title={name}
+              style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#3498db',
+                color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '10px', fontWeight: 700, border: '2px solid #fff', cursor: 'default',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>
+              {initials}
+            </div>
+          );
+        })}
+        <div onClick={() => openAssignModal(item)} title="Cakto user"
+          style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#eee',
+            color: '#555', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '16px', cursor: 'pointer', border: '2px dashed #aaa', fontWeight: 700 }}>
+          +
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
+      {/* ASSIGN MODAL */}
+      {assignModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 1000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          onClick={() => setAssignModal(null)}>
+          <div style={{ background: '#fff', borderRadius: '14px', padding: '28px', width: '380px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }} onClick={e => e.stopPropagation()}>
+
+            <h3 style={{ margin: '0 0 4px 0', color: '#2c3e50' }}>Cakto Përdorues</h3>
+            <p style={{ margin: '0 0 18px 0', color: '#888', fontSize: '13px' }}>
+              Task: <b>{assignModal.task.title}</b>
+            </p>
+
+            {/* userat tashmë të caktuar */}
+            {(assignModal.task.taskAssignments || []).length > 0 && (
+              <div style={{ marginBottom: '14px' }}>
+                <div style={{ fontSize: '12px', color: '#999', marginBottom: '6px', fontWeight: 600, textTransform: 'uppercase' }}>Të caktuar</div>
+                {(assignModal.task.taskAssignments || []).map((a: any) => (
+                  <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    background: '#f4f7f6', borderRadius: '6px', padding: '6px 10px', marginBottom: '4px' }}>
+                    <span style={{ fontWeight: 500, fontSize: '14px' }}>{a.appUser?.userName || '?'}</span>
+                    <button onClick={() => handleRemoveAssignment(assignModal.task.id, a.user_Id)}
+                      style={{ background: 'none', border: 'none', color: '#e74c3c', cursor: 'pointer', fontSize: '16px' }}>✕</button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#555', marginBottom: '6px' }}>
+              Shto përdorues të ri
+            </label>
+            <select value={assignUserId} onChange={e => setAssignUserId(e.target.value)}
+              style={{ width: '100%', padding: '9px 12px', borderRadius: '7px', border: '1px solid #ddd',
+                fontSize: '14px', marginBottom: '12px', boxSizing: 'border-box' as any }}>
+              <option value="">— Zgjidh përdoruesin —</option>
+              {allUsers
+                .filter((u: any) => !(assignModal.task.taskAssignments || []).some((a: any) => a.user_Id === u.id))
+                .map((u: any) => (
+                  <option key={u.id} value={u.id}>{u.userName}</option>
+                ))}
+            </select>
+
+            {assignMsg && (
+              <div style={{ padding: '8px 12px', borderRadius: '6px', marginBottom: '12px', fontSize: '13px',
+                background: assignMsg.ok ? '#e8f8f0' : '#fdecea',
+                color: assignMsg.ok ? '#27ae60' : '#c0392b', fontWeight: 500 }}>
+                {assignMsg.ok ? '✓ ' : '✗ '}{assignMsg.text}
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={handleAssign}
+                style={{ flex: 1, background: '#3498db', color: '#fff', border: 'none', padding: '10px',
+                  borderRadius: '7px', cursor: 'pointer', fontWeight: 600, fontSize: '14px' }}>
+                Cakto
+              </button>
+              <button onClick={() => setAssignModal(null)}
+                style={{ flex: 1, background: '#eee', color: '#333', border: 'none', padding: '10px',
+                  borderRadius: '7px', cursor: 'pointer', fontSize: '14px' }}>
+                Mbyll
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <header className="headeriMenagement">
         <div>
           <a href="index.html">
@@ -95,8 +232,16 @@ function UserManagement() {
           </Link>
 
           <Link to={"/contact"}>
-
             <li><a href="contact.html">Contact</a></li>
+          </Link>
+          <Link to={"/search"}>
+            <li><a>Kërkim</a></li>
+          </Link>
+          <Link to={"/export-import"}>
+            <li><a>Export/Import</a></li>
+          </Link>
+          <Link to={"/reports"}>
+            <li><a>Reports</a></li>
           </Link>
          
           <li>
@@ -150,44 +295,17 @@ function UserManagement() {
 
               {tasks.filter(t => t.progress >= 0 && t.progress < 50).map((item) => (
                 <div className="card" key={item.id}>
-
-<div className="taskName">
-  <h2>{item.title}</h2>
-  
-  
-        {/* sen hiq */}
-  <div className="assigned-users-list" style={{ display: 'flex', gap: '5px', marginTop: '5px' }}>
-    {item.appUsers && item.appUsers.map((u: any) => (
-      <div 
-        key={u.id} 
-        title={u.userName} 
-        style={{
-          width: '25px',
-          height: '25px',
-          borderRadius: '50%',
-          backgroundColor: '#007bff',
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '10px',
-          fontWeight: 'bold',
-          border: '1px solid white'
-        }}
-      >
-        {u.userName.substring(0, 2).toUpperCase()}
-      </div>
-    ))}
-  </div>
-
-  <hr />
-  <details>
-  <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
-  <h4 onClick={() => handleEdit(item)} style={{ color: '#3498db', cursor: 'pointer' }}>
-    <FontAwesomeIcon icon={faPenToSquare} /> Edit Task
-  </h4>
-</details>
-</div>
+                  <div className="taskName">
+                    <h2>{item.title}</h2>
+                    <AssignedAvatars item={item} />
+                    <hr />
+                    <details>
+                      <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
+                      <h4 onClick={() => handleEdit(item)} style={{ color: '#3498db', cursor: 'pointer' }}>
+                        <FontAwesomeIcon icon={faPenToSquare} /> Edit Task
+                      </h4>
+                    </details>
+                  </div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
 
                     <label className="LableTask" >Created At:</label>
@@ -235,12 +353,13 @@ function UserManagement() {
                 <div className="cardtwo" key={item.id}>
                   <div className="taskName">
                     <h2>{item.title}</h2>
-                   <details>
-  <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
-  <h4 onClick={() => handleEdit(item)} style={{ color: '#3498db', cursor: 'pointer' }}>
-    <FontAwesomeIcon icon={faPenToSquare} /> Edit Task
-  </h4>
-</details>
+                    <AssignedAvatars item={item} />
+                    <details>
+                      <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
+                      <h4 onClick={() => handleEdit(item)} style={{ color: '#3498db', cursor: 'pointer' }}>
+                        <FontAwesomeIcon icon={faPenToSquare} /> Edit Task
+                      </h4>
+                    </details>
                   </div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
 
@@ -285,7 +404,11 @@ function UserManagement() {
               </div>
               {tasks.filter(t => t.progress == 100).map((item) => (
                 <div className="cardFour" key={item.id}>
-                  <div className="taskName"><h2>{item.title}</h2><details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary></details></div>
+                  <div className="taskName">
+                    <h2>{item.title}</h2>
+                    <AssignedAvatars item={item} />
+                    <details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary></details>
+                  </div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
 
                     <label className="LableTask" >Created At:</label>
@@ -331,7 +454,11 @@ function UserManagement() {
               </div>
               {tasks.filter(t => t.due_Date < t.created_At).map((item) => (
                 <div className="cardThree" key={item.id}>
-                  <div className="taskName"><h2>{item.title}</h2><details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary></details></div>
+                  <div className="taskName">
+                    <h2>{item.title}</h2>
+                    <AssignedAvatars item={item} />
+                    <details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary></details>
+                  </div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
 
                     <label className="LableTask" >Created At:</label>

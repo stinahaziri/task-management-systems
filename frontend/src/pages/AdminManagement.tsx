@@ -15,10 +15,12 @@ function AdminManagement() {
 
   const [users, setUsers] = useState<any[]>([]);
   const [tasks, setTasks] = useState<any[]>([]);
+  const [assignments, setAssignments] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedTaskId, setSelectedTaskId] = useState("");
+  const [aclMsg, setAclMsg] = useState<{ text: string; ok: boolean } | null>(null);
 
   const pageSize = 5;
 
@@ -37,6 +39,7 @@ function AdminManagement() {
     if ((user as any)?.role === "Admin") {
       fetchUsers();
       fetchTasks();
+      fetchAssignments();
     }
   }, [currentPage]);
 
@@ -55,6 +58,13 @@ function AdminManagement() {
     } catch (e) { console.error(e); }
   };
 
+  const fetchAssignments = async () => {
+    try {
+      const res = await axios.get("http://localhost:5165/backend/Admin/TaskAssignments", axiosConfig);
+      setAssignments(res.data);
+    } catch (e) { console.error(e); }
+  };
+
   const handleDeleteTask = async (id: number) => {
     if (window.confirm("A jeni i sigurt?")) {
       try {
@@ -65,14 +75,30 @@ function AdminManagement() {
   };
 
   const handleAssignPermission = async () => {
-    if (!selectedUserId || !selectedTaskId) return alert("Plotësoni fushat!");
+    if (!selectedUserId || !selectedTaskId) {
+      setAclMsg({ text: "Ju lutem zgjidhni përdoruesin dhe task-un!", ok: false });
+      return;
+    }
     try {
-      await axios.post(`http://localhost:5165/backend/Admin/AssignUserTask`, {
+      const res = await axios.post(`http://localhost:5165/backend/Admin/AssignUserTask`, {
         userId: selectedUserId, taskId: parseInt(selectedTaskId)
       }, axiosConfig);
-      alert("Aksesi u dha!");
+      setAclMsg({ text: res.data.message, ok: true });
+      setSelectedUserId("");
+      setSelectedTaskId("");
+      fetchAssignments();
       fetchTasks();
-    } catch (e) { alert("Gabim!"); }
+    } catch (e: any) {
+      const msg = e?.response?.data || "Gabim gjatë caktimit.";
+      setAclMsg({ text: typeof msg === "string" ? msg : JSON.stringify(msg), ok: false });
+    }
+  };
+
+  const handleRemoveAssignment = async (assignmentId: number) => {
+    try {
+      await axios.delete(`http://localhost:5165/backend/Admin/RemoveAssignment/${assignmentId}`, axiosConfig);
+      setAssignments(assignments.filter(a => a.id !== assignmentId));
+    } catch (e) { alert("Gabim gjatë heqjes."); }
   };
 
   if (!(user as any) || (user as any).role !== "Admin") return null;
@@ -175,7 +201,38 @@ function AdminManagement() {
                 </select>
               </div>
               <button className="btn-admin-action" onClick={handleAssignPermission}>Grant Permission</button>
+
+              {aclMsg && (
+                <div style={{ marginTop: "12px", padding: "10px 14px", borderRadius: "8px",
+                  background: aclMsg.ok ? "#e8f8f0" : "#fdecea",
+                  color: aclMsg.ok ? "#27ae60" : "#c0392b", fontWeight: 500, fontSize: "14px" }}>
+                  {aclMsg.ok ? "✓ " : "✗ "}{aclMsg.text}
+                </div>
+              )}
             </div>
+
+            {/* LISTA E CAKTIMEVE */}
+            {assignments.length > 0 && (
+              <div style={{ marginTop: "20px" }}>
+                <h3 style={{ fontSize: "14px", color: "#555", marginBottom: "10px", borderTop: "1px solid #eee", paddingTop: "16px" }}>
+                  Caktimet aktive ({assignments.length})
+                </h3>
+                <div style={{ maxHeight: "220px", overflowY: "auto" }}>
+                  {assignments.map((a: any) => (
+                    <div key={a.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
+                      padding: "8px 10px", borderRadius: "6px", background: "#f4f7f6", marginBottom: "6px" }}>
+                      <div>
+                        <div style={{ fontWeight: 600, fontSize: "13px" }}>{a.taskTitle}</div>
+                        <div style={{ color: "#888", fontSize: "12px" }}>→ {a.userName}</div>
+                      </div>
+                      <button onClick={() => handleRemoveAssignment(a.id)}
+                        style={{ background: "none", border: "none", color: "#e74c3c", cursor: "pointer", fontSize: "16px" }}
+                        title="Hiq caktimin">✕</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
         </div>
 

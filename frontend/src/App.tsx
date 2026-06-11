@@ -15,8 +15,11 @@ import Contact from "./pages/contact";
 import Login from "./pages/Login";
 import SignIn from './pages/SignIn';
 import AdminManagement  from "./pages/AdminManagement"
+import AdvancedSearchPage from "./pages/AdvancedSearchPage";
+import ExportImportPage from "./pages/ExportImportPage";
+import ReportsPage from "./pages/ReportsPage";
 
-import { UserProvider } from './Context/useAuth'; 
+import { UserProvider } from './Context/useAuth';
 import AuthService from './Services/AuthService';
 
 function AppRoutes() {
@@ -44,6 +47,11 @@ function AppRoutes() {
 {/* rolet */}
  <Route path="/userManagment" element={<UserManagement />} />
          <Route path="/adminManagement" element={<AdminManagement />} />
+
+        {/* Feature Pages */}
+        <Route path="/search" element={<AdvancedSearchPage />} />
+        <Route path="/export-import" element={<ExportImportPage />} />
+        <Route path="/reports" element={<ReportsPage />} />
       </Routes>
 
       <ToastContainer />

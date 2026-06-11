@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ComCenter\\Documents\\GitHub\\task-management-systems\\backend\\backend.csproj": {}
+    "C:\\Users\\ComCenter\\task-management-systems-2\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ComCenter\\Documents\\GitHub\\task-management-systems\\backend\\backend.csproj": {
+    "C:\\Users\\ComCenter\\task-management-systems-2\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ComCenter\\Documents\\GitHub\\task-management-systems\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\ComCenter\\task-management-systems-2\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\ComCenter\\Documents\\GitHub\\task-management-systems\\backend\\backend.csproj",
+        "projectPath": "C:\\Users\\ComCenter\\task-management-systems-2\\backend\\backend.csproj",
         "packagesPath": "C:\\Users\\ComCenter\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ComCenter\\Documents\\GitHub\\task-management-systems\\backend\\obj\\",
+        "outputPath": "C:\\Users\\ComCenter\\task-management-systems-2\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,12 +44,16 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.3, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[9.0.1, )"
@@ -102,7 +106,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

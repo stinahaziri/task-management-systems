@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text;
 using backend.Data;
 using backend.Dtos.TaskEntity.Role;
 using backend.Interface;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ClosedXML.Excel;
 
 namespace backend.Controllers
 {
@@ -121,6 +123,59 @@ public async Task<IActionResult> GetAllUsers()
             }
         }
 
-      
+
+        // ============================================================
+        // FEATURE 1: USER SEARCH (Advanced Search - list 5: Users)
+        // ============================================================
+        [HttpGet("users/search")]
+        public async Task<IActionResult> SearchUsers([FromQuery] string? q, [FromQuery] string? sortBy = "username", [FromQuery] string? sortOrder = "asc")
+        {
+            var query = _userMenager.Users.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(q))
+                query = query.Where(u => u.UserName!.Contains(q) || u.Email!.Contains(q));
+
+            var users = query.Select(u => new { u.Id, u.UserName, u.Email });
+            var list = sortOrder == "desc"
+                ? await users.OrderByDescending(u => u.UserName).ToListAsync()
+                : await users.OrderBy(u => u.UserName).ToListAsync();
+
+            return Ok(new { total = list.Count, results = list });
+        }
+
+        // ============================================================
+        // FEATURE 2: USER EXPORT
+        // ============================================================
+        [HttpGet("users/export/csv")]
+        public async Task<IActionResult> ExportUsersCsv()
+        {
+            var users = await _userMenager.Users.Select(u => new { u.Id, u.UserName, u.Email }).ToListAsync();
+            var sb = new StringBuilder();
+            sb.AppendLine("ID,Username,Email");
+            foreach (var u in users)
+                sb.AppendLine($"{u.Id},\"{u.UserName}\",\"{u.Email}\"");
+            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/csv", $"users_{DateTime.Now:yyyyMMdd}.csv");
+        }
+
+        [HttpGet("users/export/json")]
+        public async Task<IActionResult> ExportUsersJson()
+        {
+            var users = await _userMenager.Users.Select(u => new { u.Id, u.UserName, u.Email }).ToListAsync();
+            return Ok(users);
+        }
+
+        [HttpGet("users/export/excel")]
+        public async Task<IActionResult> ExportUsersExcel()
+        {
+            var users = await _userMenager.Users.Select(u => new { u.Id, u.UserName, u.Email }).ToListAsync();
+            using var wb = new XLWorkbook();
+            var ws = wb.Worksheets.Add("Users");
+            ws.Cell(1, 1).Value = "ID"; ws.Cell(1, 2).Value = "Username"; ws.Cell(1, 3).Value = "Email";
+            for (int c = 1; c <= 3; c++) { ws.Cell(1, c).Style.Font.Bold = true; ws.Cell(1, c).Style.Fill.BackgroundColor = XLColor.SteelBlue; ws.Cell(1, c).Style.Font.FontColor = XLColor.White; }
+            for (int i = 0; i < users.Count; i++) { ws.Cell(i + 2, 1).Value = users[i].Id; ws.Cell(i + 2, 2).Value = users[i].UserName; ws.Cell(i + 2, 3).Value = users[i].Email; }
+            ws.Columns().AdjustToContents();
+            using var ms = new MemoryStream();
+            wb.SaveAs(ms);
+            return File(ms.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"users_{DateTime.Now:yyyyMMdd}.xlsx");
+        }
     }
 }
