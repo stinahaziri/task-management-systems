@@ -22,6 +22,7 @@ function UserManagement() {
   const fetchTasks = async () => {
     try {
       const response = await axios.get("http://localhost:5165/api/v1/tasks");
+      console.log("TASKS DATA:", JSON.stringify(response.data[0], null, 2));
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -113,29 +114,31 @@ function UserManagement() {
 
 
 
-  // avatars e userave të caktuar + butoni "+"
+  // userat e caktuar + butoni "+"
   const AssignedAvatars = ({ item }: { item: any }) => {
     const assigned: any[] = item.taskAssignments || [];
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px', flexWrap: 'wrap' }}>
+      <div style={{ marginTop: '8px' }}>
         {assigned.map((a: any) => {
           const name = a.appUser?.userName || '?';
-          const initials = name.substring(0, 2).toUpperCase();
           return (
-            <div key={a.id} title={name}
-              style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#3498db',
+            <div key={a.id} style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '4px' }}>
+              <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#3498db',
                 color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '10px', fontWeight: 700, border: '2px solid #fff', cursor: 'default',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>
-              {initials}
+                fontSize: '10px', fontWeight: 700, flexShrink: 0 }}>
+                {name.substring(0, 2).toUpperCase()}
+              </div>
+              <span style={{ fontSize: '12px', color: '#444', fontWeight: 500 }}>{name}</span>
             </div>
           );
         })}
         <div onClick={() => openAssignModal(item)} title="Cakto user"
-          style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#eee',
-            color: '#555', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '16px', cursor: 'pointer', border: '2px dashed #aaa', fontWeight: 700 }}>
-          +
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '4px',
+            cursor: 'pointer', color: '#3498db', fontSize: '12px', fontWeight: 600 }}>
+          <span style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#eaf4fd',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '15px', border: '1.5px dashed #3498db', color: '#3498db' }}>+</span>
+          Shto user
         </div>
       </div>
     );
@@ -353,7 +356,6 @@ function UserManagement() {
                 <div className="cardtwo" key={item.id}>
                   <div className="taskName">
                     <h2>{item.title}</h2>
-                    <AssignedAvatars item={item} />
                     <details>
                       <summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary>
                       <h4 onClick={() => handleEdit(item)} style={{ color: '#3498db', cursor: 'pointer' }}>
@@ -406,7 +408,6 @@ function UserManagement() {
                 <div className="cardFour" key={item.id}>
                   <div className="taskName">
                     <h2>{item.title}</h2>
-                    <AssignedAvatars item={item} />
                     <details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary></details>
                   </div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
@@ -456,7 +457,6 @@ function UserManagement() {
                 <div className="cardThree" key={item.id}>
                   <div className="taskName">
                     <h2>{item.title}</h2>
-                    <AssignedAvatars item={item} />
                     <details><summary><FontAwesomeIcon icon={faEllipsisVertical} /></summary></details>
                   </div>
                   <Link to={`/infoTask/${item.id}`} key={item.id}>
